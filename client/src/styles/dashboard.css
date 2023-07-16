@@ -1,0 +1,11 @@
+.dashboard {
+    text-align: center;
+}
+
+dialog {
+    z-index: 10;
+    margin-top: 10px;
+    background: green;
+    border: none;
+    border-radius: 1rem;
+}

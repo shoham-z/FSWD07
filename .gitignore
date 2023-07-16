@@ -1,0 +1,9 @@
+/.idea/
+server/api/.idea/
+server/api/node_modules/
+server/node_modules/
+
+
+client/.idea/
+client/.idea/discord.xml
+client/node_modules/

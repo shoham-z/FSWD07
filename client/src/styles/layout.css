@@ -1,0 +1,33 @@
+nav {
+    background: linear-gradient(to bottom, #2980B9, #2196F3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+
+.link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 12px;
+    padding: 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+.link:hover {
+    background-color: #fff;
+    color: #2196F3;
+}
+
+.link.active {
+    background-color: #fff;
+    color: #2196F3;
+}
+button.logout {
+    position: absolute;
+    top: 15px;
+    right:5%;
+    z-index: 10;
+}

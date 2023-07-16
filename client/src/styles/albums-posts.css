@@ -1,0 +1,30 @@
+.content {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(10, 10%);
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    width: fit-content;
+    height: 70vh;
+    min-height: 400px;
+    margin: 2% auto;
+}
+
+.item_link {
+    border: 2px solid #999999;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: 2% auto;
+}

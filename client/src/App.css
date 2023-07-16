@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+}
+
+button {
+  background-color: #dddddd;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #bbbbbb; /* darker shade of red on hover */
+}
+
+.go-back {
+  position: absolute;
+  left: 3%;
+  top: 12%;
+  font-size: 40px;
+}
