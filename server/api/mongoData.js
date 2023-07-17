@@ -1,174 +1,219 @@
-const {MongoClient} = require('mongodb');
-const uri = "mongodb+srv://fswd06:fswd06@cluster0.pp8gdmc.mongodb.net/?retryWrites=true&w=majority";
+const mysql = require('mysql2');
+const axios = require('axios');
 
-async function insert(collection, data) {
-    let client = new MongoClient(uri);
-    const db = client.db('fswd06');
-    if (collection !== "loginCredentials") {
+const con = mysql.createConnection({
+    host: "http://bcrjamgqfdlxvyaek43l-mysql.services.clever-cloud.com",
+    user: "ubadfxfo15rh2knb",
+    password: "KWJDzPibMvcHzd12JjHj",
+    database: "bcrjamgqfdlxvyaek43l"
+});
 
-        let arr = await db.collection(collection).find({}).toArray();
-        client.close();
+// con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     const sql = "CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), userName VARCHAR(255), phone VARCHAR(255), email VARCHAR(255), address VARCHAR(255), website VARCHAR(255), company VARCHAR(255))";
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log("Table created");
 
-        data.id = arr.length + 1;
-    }
+//       axios.get('https://jsonplaceholder.typicode.com/users')
+//         .then(response => {
+//           const data = response.data;
+//           insertUsersData(data);
+//           con.end(); // Close the connection after the data insertion is complete
+//         })
+//         .catch(error => {
+//           console.error('Error fetching data from API:', error);
+//           con.end(); // Close the connection in case of an error
+//         });
+//     });
+//   });
 
-    client = new MongoClient(uri);
+//   const insertUsersData = (data) => {
+//     const query = 'INSERT INTO users (id, name, userName, phone, email, address, website, company) VALUES ?';
+//     const values = data.map(item => {
+//       const { id, name, username, email, phone, website, address, company } = item;
+//       return [id, name, username, phone, email, address.street + address.suite + address.city, website, company.name];
+//     });
 
-    db.collection(collection).insertOne(data)
-        .then(r => console.log(r))
-    client.close();
-}
+//     con.query(query, [values], (error, results) => {
+//       if (error) {
+//         console.error('Error inserting data into table:', error);
+//       } else {
+//         console.log('Data inserted successfully');
+//       }
+//     });
+//   };
 
-function update(collection, data) {
-    const client = new MongoClient(uri);
+// con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     var sql = "CREATE TABLE users (id INT  PRIMARY KEY, name VARCHAR(255), userName VARCHAR(255), email VARCHAR(255), address VARCHAR(255), website VARCHAR(255), company VARCHAR(255))";
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log("Table created");
+//     });
+//   });
 
-    const db = client.db('fswd06');
 
-    const myquery = {id: data.id};
-    const newData = {$set: data};
+// con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     const sql = "CREATE TABLE todos (userId INT , id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255), completed VARCHAR(255), FOREIGN KEY (userId) REFERENCES users(id))";
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log("Table created");
 
-    db.collection(collection).updateOne(myquery, newData)
-        .then(r => console.log(r))
-    client.close();
-}
+//       axios.get('https://jsonplaceholder.typicode.com/todos')
+//         .then(response => {
+//           const data = response.data;
+//           insertTodosData(data);
+//           con.end(); // Close the connection after the data insertion is complete
+//         })
+//         .catch(error => {
+//           console.error('Error fetching data from API:', error);
+//           con.end(); // Close the connection in case of an error
+//         });
+//     });
+//   });
 
-function remove(collection, id) {
-    const client = new MongoClient(uri);
+//   const insertTodosData = (data) => {
+//     const query = 'INSERT INTO todos (userId, id, title, completed) VALUES ?';
+//     const values = data.map(item => {
+//       const { userId, id, title, completed } = item;
+//       return [userId, id, title, completed];
+//     });
 
-    const db = client.db('fswd06');
+//     con.query(query, [values], (error, results) => {
+//       if (error) {
+//         console.error('Error inserting data into table:', error);
+//       } else {
+//         console.log('Data inserted successfully');
+//       }
+//     });
+//   };
 
-    db.collection(collection).deleteOne({id: id})
-        .then(r => console.log(r))
-    client.close();
-}
-function removeUser(collection, username) {
-    const client = new MongoClient(uri);
+// con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     const sql = "CREATE TABLE posts (userId INT , id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255), body VARCHAR(511), FOREIGN KEY (userId) REFERENCES users(id))";
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log("Table created");
 
-    const db = client.db('fswd06');
+//       axios.get('https://jsonplaceholder.typicode.com/posts')
+//         .then(response => {
+//           const data = response.data;
+//           insertPostsData(data);
+//           con.end(); // Close the connection after the data insertion is complete
+//         })
+//         .catch(error => {
+//           console.error('Error fetching data from API:', error);
+//           con.end(); // Close the connection in case of an error
+//         });
+//     });
+//   });
 
-    db.collection(collection).deleteOne({username: username})
-        .then(r => console.log(r))
-    client.close();
-}
-async function getCommentsByPostId(postId) {
-    const client = new MongoClient(uri);
+//   const insertPostsData = (data) => {
+//     const query = 'INSERT INTO posts (userId, id, title, body) VALUES ?';
+//     const values = data.map(item => {
+//       const { userId, id, title, body } = item;
+//       return [userId, id, title, body];
+//     });
 
-    const db = client.db('fswd06');
-    let result = await db.collection("comments").find(postId ? {'postId': parseInt(postId)} : {}).toArray()
-    client.close();
-    return result;
-}
+//     con.query(query, [values], (error, results) => {
+//       if (error) {
+//         console.error('Error inserting data into table:', error);
+//       } else {
+//         console.log('Data inserted successfully');
+//       }
+//     });
+//   };
 
-async function getPicturesByAlbumId(albumId) {
-    const client = new MongoClient(uri);
 
-    const db = client.db('fswd06');
-    let result = await db.collection("photos").find(albumId? {'albumId': parseInt(albumId)} : {}).toArray()
-    client.close();
-    return result;
-}
+// con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     const sql = "CREATE TABLE comments (postId INT , id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), body VARCHAR(511), FOREIGN KEY (postId) REFERENCES posts(id))";
+//     con.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log("Table created");
 
-async function getCollectionById(collection, id) {
-    const client = new MongoClient(uri);
+//       axios.get('https://jsonplaceholder.typicode.com/comments')
+//         .then(response => {
+//           const data = response.data;
+//           insertCommentsData(data);
+//           con.end(); // Close the connection after the data insertion is complete
+//         })
+//         .catch(error => {
+//           console.error('Error fetching data from API:', error);
+//           con.end(); // Close the connection in case of an error
+//         });
+//     });
+//   });
 
-    const db = client.db('fswd06');
-    let result = await db.collection(collection).find(id ? {'id': parseInt(id)} : {}).toArray()
-    client.close();
-    return result;
-}
+//   const insertCommentsData = (data) => {
+//     const query = 'INSERT INTO comments (postId, id, name, email, body) VALUES ?';
+//     const values = data.map(item => {
+//       const { postId, id, name, email, body } = item;
+//       return [postId, id, name, email, body];
+//     });
 
-async function getCollectionByUsername(collection, username) {
-    const client = new MongoClient(uri);
+//     con.query(query, [values], (error, results) => {
+//       if (error) {
+//         console.error('Error inserting data into table:', error);
+//       } else {
+//         console.log('Data inserted successfully');
+//       }
+//     });
+//   };
 
-    const db = client.db('fswd06');
-    let result = await db.collection(collection).find(username ? {'username': username} : {}).toArray()
-    client.close();
-    return result;
-}
 
-async function getPostsByUserId(userId) {
-    const client = new MongoClient(uri);
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+//   const sql = "CREATE TABLE passwords (userId INT PRIMARY KEY, password VARCHAR(255), FOREIGN KEY (userId) REFERENCES users(id))";
+//   con.query(sql, function (err, result) {
+//     if (err) throw err;
+//     console.log("Table created");
 
-    const db = client.db('fswd06');
-    let result = await db.collection("posts").find(userId ? {'userId': parseInt(userId)} : {}).toArray()
-    client.close();
-    return result;
-}
+//     axios.get('https://jsonplaceholder.typicode.com/users')
+//       .then(response => {
+//         const data = response.data;
+//         insertPasswordsData(data);
+//         con.end(); // Close the connection after the data insertion is complete
+//       })
+//       .catch(error => {
+//         console.error('Error fetching data from API:', error);
+//         con.end(); // Close the connection in case of an error
+//       });
+//   });
 
-async function getAlbumsByUserId(userId) {
-    const client = new MongoClient(uri);
+// });
 
-    const db = client.db('fswd06');
-    let result = await db.collection("albums").find(userId ? {'userId': parseInt(userId)} : {}).toArray()
-    client.close();
-    return result;
-}
+// const insertPasswordsData = (data) => {
+//   const query = 'INSERT INTO passwords (userId, password) VALUES ?';
+//   const values = data.map(item => {
+//     const { id, address } = item;
+//     return [id, address.geo.lat.slice(-4)];
+//   });
 
-async function getTodosByUserId(userId) {
-    const client = new MongoClient(uri);
+//   con.query(query, [values], (error, results) => {
+//     if (error) {
+//       console.error('Error inserting data into table:', error);
+//     } else {
+//       console.log('Data inserted successfully');
+//     }
+//   });
 
-    const db = client.db('fswd06');
-    let result = await db.collection("todos").find(userId ? {'userId': parseInt(userId)} : {}).toArray()
-    client.close();
-    return result;
-}
+//   const grantQuery = `GRANT ALL PRIVILEGES ON project6.passwords TO 'root'@'localhost'`;
 
-async function getUsername(username) {
-    const client = new MongoClient(uri);
+//   connection.query(grantQuery, (grantError, grantResults) => {
+//       if (grantError) {
+//         console.error('Error granting privileges:', grantError);
+//       } else {
+//         console.log('Access granted to manager user');
+//       }
+//   });
 
-    const db = client.db('fswd06');
-    let result = await db.collection("loginCredentials").find({"username": username}).toArray();
-    client.close();
-    return result[0];
-}
-
-async function importUsernames() {
-    const client = new MongoClient(uri);
-
-    const response = await fetch(`https://jsonplaceholder.typicode.com/users`);
-    const json = await response.json();
-    json.map((s) => {
-        let lat = s.address.geo.lat;
-        insert('loginCredentials', {username: s.username, password: lat.substring(lat.indexOf('.') + 1)})
-    });
-
-    await client.close();
-}
-
-async function addUser(username, password) {
-    const client = new MongoClient(uri);
-
-    insert('loginCredentials', {username, password});
-
-    await client.close();
-    return 0;
-}
-
-async function addUserDetails(username, data) {
-    const client = new MongoClient(uri);
-
-    insert('users', {username, data});
-
-    await client.close();
-    return 0;
-}
-
-async function updateUsername(username, newPassword) {
-    const client = new MongoClient(uri);
-
-    const db = client.db('fswd06');
-
-    const myquery = {username: username};
-    const newData = {$set: {password: newPassword}};
-
-    db.collection("loginCredentials").updateOne(myquery, newData)
-        .then(r => console.log(r))
-
-    await client.close();
-}
-
-module.exports = {
-    insert, update, remove, addUser, addUserDetails,
-    getAlbumsByUserId, getPicturesByAlbumId, updateUsername, removeUser,
-    getCommentsByPostId, getCollectionById, getCollectionByUsername, getPostsByUserId, getTodosByUserId, getUsername
-};
+// };
