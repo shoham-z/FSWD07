@@ -1,0 +1,42 @@
+.selected-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px;
+    background-color: #f5f5f5;
+  }
+  
+  .selected-contact {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 4px 10px;
+    margin: 4px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .selected-contact:hover {
+    background-color: #ddd;
+  }
+  
+  .search-box {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #f5f5f5;
+  }
+  
+  .search-icon {
+    margin-right: 8px;
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  

@@ -31,7 +31,7 @@ const Login = (_props) => {
                     alert("Login failed\nYour username or password is incorrect")
                     return;
                 }
-
+                _props.handleLogin();
                 localStorage.setItem("username", username);
                 setLoggedIn(username);
 
@@ -68,7 +68,12 @@ const Login = (_props) => {
                     <button className="adduser" type="submit">Login</button>
                 </div>
                 <div className="form-group">
-                    <button type='button' onClick={() => navigate('/register/')}>Register</button>
+                    <button type='button' onClick={() => {
+                        navigate('/register/')}}>Register</button>
+                </div>
+                <div className="form-group">
+                    <button type='button' onClick={() => {
+                        navigate('/messenger/')}}>login 1</button>
                 </div>
             </form>
         </div>

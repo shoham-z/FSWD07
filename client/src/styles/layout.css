@@ -1,22 +1,62 @@
 nav {
     background: linear-gradient(to bottom, #2980B9, #2196F3);
     display: flex;
-    justify-content: center;
+    /* justify-content:space-between; */
     align-items: center;
     padding: 12px;
+    height: 6vh;
 }
 
+.container{
+  display: flex;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.right-side-bar{
+    width: 50%;
+    display: flex;
+    justify-content:space-around;
+    border-right: 1px solid #ccc; /* Add border to the right side of the right-side-bar */
+}
+
+.left-side-bar{
+    width: 50%;
+}
+
+  .profile-icon{
+    color: #0e0e0e;
+  }
+
+/* Styles for the right section */
+.right-section {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Styles for the left section */
+  .left-section {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+  }
 
 .link {
-    color: #fff;
+    color: #0a0a0a;
     text-decoration: none;
     margin: 0 12px;
     padding: 12px;
     border-radius: 4px;
-    transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
-.link:hover {
+/* .link:hover {
     background-color: #fff;
     color: #2196F3;
 }
@@ -24,10 +64,38 @@ nav {
 .link.active {
     background-color: #fff;
     color: #2196F3;
-}
+} */
 button.logout {
     position: absolute;
     top: 15px;
     right:5%;
     z-index: 10;
 }
+
+.selection-menu {
+  position: absolute;
+  top: 11%;
+  left: 30%; /* Adjust the left position to move the menu to the left side */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.selection-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selection-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.selection-menu li:hover {
+  background-color: #f0f0f0;
+}
+

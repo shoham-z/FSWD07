@@ -1,0 +1,140 @@
+.container2 {
+  display: flex;
+  height: 100vh;
+}
+
+/* Styles for the left section */
+.right-section1 {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for the right section */
+.left-section1 {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  overflow-y: auto;
+}
+
+.chat-list-container {
+  max-height: 80vh; /* Set a maximum height for the chat list container */
+  overflow-y: auto; /* Enable vertical scrolling when the chats exceed the container height */
+  padding: 8px;
+}
+
+.search {
+  display: inherit;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  max-height: 100%;
+}
+
+.search-box {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  display: flex;
+  /* align-items: center; */
+  padding: 5px 15px;
+  width: 300px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+/* Styles for the sticky footer */
+.footer {
+  background-color: #f0f0f0;
+  color: white;
+  padding: 10px;
+  height: 6vh;
+}
+
+/* Styles for the chat window */
+.chat-window {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* Your styles for each message */
+.message {
+  background-color: #c2c4ff;
+  color: #000;
+  padding: 8px 10px;
+  max-width: 50%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Your styles for the message sender */
+.sender {
+  font-weight: bold;
+}
+
+/* Your styles for the message content */
+.message-content {
+  margin: 5px 0;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.users-icon {
+  padding-right: 8px;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd; /* Add a border between chat items */
+  transition: background-color 0.2s ease;
+}
+
+.chat-item:hover {
+  background-color: #e0e0e0;
+}
+
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.chat-info {
+  flex: 1;
+}
+
+.chat-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.last-message {
+  margin: 0;
+  color: #777;
+}
+
+/* .right-section {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+  } */

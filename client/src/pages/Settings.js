@@ -86,7 +86,7 @@ const Settings = () => {
         navigate(`/`)
     };
     return (
-        <div className='dashboard'>
+        <div className="left-section1">
             <h1>Hello, {username}</h1>
             <h2>Settings</h2>
 
