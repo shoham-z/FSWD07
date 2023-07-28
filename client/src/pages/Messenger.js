@@ -4,10 +4,13 @@ import NewChats from "./NewChats";
 import NewGroup from "./NewGroup";
 import Settings from "./Settings";
 import "../styles/Messenger.css";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaPaperPlane } from "react-icons/fa";
+import config from '../config';
 
 const Messenger = ({
+  chatData,
   setChosenChat,
+  chosenChat,
   newChat,
   settings,
   newGroup,
@@ -16,11 +19,36 @@ const Messenger = ({
   setNewChat,
 }) => {
   // const user_id = JSON.parse(localStorage.getItem("user")).id;
-  const chatData = JSON.parse(localStorage.getItem("Chats"))
-  const [filteredChatData, setFilteredChatData] = useState(chatData);
+  const chatData1 = JSON.parse(localStorage.getItem("Chats")) || chatData
+  const [filteredChatData, setFilteredChatData] = useState(chatData1);
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
   const user_id = JSON.parse(localStorage.getItem("user")).id;
+
+  const [messageInput, setMessageInput] = useState("");
+
+  const handleChangeMessage = (event) => {
+    setMessageInput(event.target.value);
+  };
+
+  const handleSendMessage = () => {
+    if (messageInput.trim() !== "") {
+      // Send the message to the right section (assuming chatId is defined)
+      // For simplicity, we'll just create a dummy message object
+      const newMessage = {
+        id: messages.length + 1, // You may want to generate a unique ID
+        name: "Your Name", // Replace with the sender's name
+        text: messageInput,
+      };
+
+      // Add the new message to the beginning of the messages list
+      setMessages((prevMessages) => [newMessage, ...prevMessages]);
+
+      // Clear the message input after sending the message
+      setMessageInput("");
+    }
+  };
+
   useEffect(() => {
 
     fetch(`${config.uri}/${user_id}/chats`)
@@ -33,6 +61,7 @@ const Messenger = ({
         // Handle any errors
         console.error(error);
       });
+    
     const dummyMessages = [
       {
         id: 1,
@@ -50,7 +79,7 @@ const Messenger = ({
     const value = event.target.value;
 
     // Filter the chat data based on the input value
-    const filteredChats = chatData.filter((chat) =>
+    const filteredChats = chatData1.filter((chat) =>
       chat.name.toLowerCase().includes(value.toLowerCase())
     );
 
@@ -58,23 +87,33 @@ const Messenger = ({
   };
 
   const handleChatClick = (chatId) => {
+    console.log(chatId)
     setChosenChat(chatId);
+    fetch(`${config.uri}/${user_id}/${chatId}/messages`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        setMessages(data)
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
   };
 
   const handleScroll = () => {
-    // Replace this with your code to fetch more messages when the user scrolls up
-    // For now, I'm just using a dummy data array as an example
-    const dummyMoreMessages = [
-      { id: 4, text: "Message 4" },
-      { id: 5, text: "Message 5" },
-      { id: 6, text: "Message 6" },
-      // Add more messages here
-    ];
-
-    // Simulate fetching more messages with a delay (you can remove this in the actual implementation)
-    setTimeout(() => {
-      setMessages((prevMessages) => [...dummyMoreMessages, ...prevMessages]);
-    }, 1000);
+    fetch(`${config.uri}/${user_id}/${chosenChat}/messages`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        setTimeout(() => {
+          setMessages((prevMessages) => [...data, ...prevMessages]);
+        }, 1000);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      }); 
   };
 
   const handelPage = () => {
@@ -149,7 +188,18 @@ const Messenger = ({
           ))}
         </div>
         <footer className="footer">
-          {/* Content for the left section footer */}
+        <div className="message-input-container">
+            <input
+              type="text"
+              value={messageInput}
+              onChange={handleChangeMessage}
+              placeholder="Type your message..."
+              className="message-input"
+            />
+            <div className="send-icon" onClick={handleSendMessage}>
+              <FaPaperPlane />
+            </div>
+          </div>
         </footer>
       </div>
     </div>

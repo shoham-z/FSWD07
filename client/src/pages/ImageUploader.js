@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/ImageUploader.css";
+import config from '../config';
 
 const ImageUploader = () => {
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ const ImageUploader = () => {
 
   const user_id = JSON.parse(localStorage.getItem("user")).id;
 
-
   const handleUpload = () => {
     fetch(`${config.uri}/${user_id}/pfp`, {
       method: "POST",
@@ -43,11 +43,9 @@ const ImageUploader = () => {
         console.error(error);
       });
   };
-    
-  };
 
   const handleNext = () => {
-       navigate('/messenger/');
+    navigate("/messenger/");
   };
 
   return (
@@ -79,7 +77,12 @@ const ImageUploader = () => {
         </div>
       </div>
       <div className="next-button-container">
-        <button className="next-button" onClick={() => {navigate('/messenger/')}}>
+        <button
+          className="next-button"
+          onClick={() => {
+            navigate("/messenger/");
+          }}
+        >
           Next
         </button>
       </div>
