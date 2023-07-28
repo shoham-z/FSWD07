@@ -48,6 +48,15 @@ con.connect(function(err) {
     });
   });
 
+async function getUsername(username) {
+    const client = new MongoClient(uri);
+
+    const db = client.db('fswd06');
+    let result = await db.collection("loginCredentials").find({"username": username}).toArray();
+    client.close();
+    return result[0];
+}
+
 //   const insertUsersData = (data) => {
 //     const query = 'INSERT INTO users (id, name, userName, phone, email, address, website, company) VALUES ?';
 //     const values = data.map(item => {
