@@ -4,8 +4,9 @@ import NewChats from "./NewChats";
 import NewGroup from "./NewGroup";
 import Settings from "./Settings";
 import "../styles/Messenger.css";
-import { FaSearch, FaPaperPlane } from "react-icons/fa";
-import config from '../config';
+import { FaSearch } from "react-icons/fa";
+import config from "../config.json";
+
 
 const Messenger = ({
   chatData,
