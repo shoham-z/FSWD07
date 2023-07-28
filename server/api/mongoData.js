@@ -49,13 +49,22 @@ con.connect(function(err) {
   });
 
 async function getUsername(username) {
-    const client = new MongoClient(uri);
-
-    const db = client.db('fswd06');
-    let result = await db.collection("loginCredentials").find({"username": username}).toArray();
-    client.close();
-    return result[0];
+    con.connect(function (err) {
+        if (err) throw err;
+        
+        // console.log("Connected!");
+    
+        const sql = `SELECT * FROM passwords AS p JOIN users AS u ON p.userId = u.id WHERE u.userName = '${username}' AND p.password = '${password}'`;
+    
+        con.query(sql, function (err, results, fields) {
+          if (err) throw err;
+          // console.log("query done");
+          return results[0];
+        });
+      });
 }
+
+
 
 //   const insertUsersData = (data) => {
 //     const query = 'INSERT INTO users (id, name, userName, phone, email, address, website, company) VALUES ?';

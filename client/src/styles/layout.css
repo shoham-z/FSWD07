@@ -28,6 +28,7 @@ nav {
 
 .left-side-bar{
     width: 50%;
+    display: flex;
 }
 
   .profile-icon{
@@ -88,6 +89,10 @@ button.logout {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.chat-name{
+  padding-left: 3%;
 }
 
 .selection-menu li {

@@ -71,6 +71,14 @@ function App() {
         "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
     },
   ];
+
+  const notChosen = {
+    id: ' ',
+    name: " ",
+    lastMessage: " ",
+    image:
+      " ",
+  }
  
   const contacts = [
     {
@@ -123,7 +131,8 @@ function App() {
         "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
     },
   ];
-
+  let chosenOne  = contacts[chosenContact]||notChosen
+  console.log(chosenOne)
   return (
     <CurrentUserContext.Provider
       value={{
@@ -153,7 +162,7 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/ImageUploader" element={<ImageUploader />} />
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route element={<Layout chosenChat={chatData[chosenChat]} chosenContact={contacts[chosenContact]} setNewChat = {setNewChat} newChat = {newChat} setSettings = {setSettings} settings = {settings} setNewGroup = {setNewGroup} newGroup = {newGroup} />}>
+          <Route element={<Layout chosenChat={chatData[chosenChat]} chosenContact={chosenOne} setNewChat = {setNewChat} newChat = {newChat} setSettings = {setSettings} settings = {settings} setNewGroup = {setNewGroup} newGroup = {newGroup} />}>
             <Route path="/messenger" element={<Messenger contacts={contacts} chatData={chatData} setChosenChat={setChosenChat} newChat = {newChat} newGroup = {newGroup} setNewGroup = {setNewGroup} settings = {settings} setChosenContact = {setChosenContact} setNewChat = {setNewChat}/>}/>
           </Route>
           <Route path="*" element={<NoPage />} />

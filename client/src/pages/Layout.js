@@ -9,7 +9,16 @@ import {
   FaBars,
 } from "react-icons/fa";
 
-const Layout = ({ chosenChat, setNewChat, newChat,setSettings,settings,setNewGroup,newGroup , chosenContact }) => {
+const Layout = ({
+  chosenChat,
+  setNewChat,
+  newChat,
+  setSettings,
+  settings,
+  setNewGroup,
+  newGroup,
+  chosenContact,
+}) => {
   let navigate = useNavigate();
   const routeParams = useParams();
   const [userImage, setUserImage] = useState(null);
@@ -33,33 +42,26 @@ const Layout = ({ chosenChat, setNewChat, newChat,setSettings,settings,setNewGro
   };
 
   const handelTitle = () => {
-    if(settings)
-    {
-      return 'Settings'
+    if (settings) {
+      return "Settings";
+    } else if (newChat) {
+      return "New Chat";
+    } else {
+      return "New Group";
     }
-    else if(newChat)
-    {
-      return 'New Chat'
-    }
-    else 
-    {
-      return 'New Group'
-    }
-  }
+  };
 
-  const handleMenuOptionClick = (option) => {
-    if (option === 'New group') {
-        setNewGroup(true);
-        setSettings(false);
-        setNewChat(false);
-    }
-    else if(option === 'Settings'){
-        setSettings(true);
-        setNewGroup(false);
-        setNewChat(false);
-    }
-    else{
-      navigate('/login')
+  const handleMenuOptionClickLeft = (option) => {
+    if (option === "New group") {
+      setNewGroup(true);
+      setSettings(false);
+      setNewChat(false);
+    } else if (option === "Settings") {
+      setSettings(true);
+      setNewGroup(false);
+      setNewChat(false);
+    } else {
+      navigate("/login");
     }
     // Handle the selection menu option click here
     console.log("Selected option:", option);
@@ -71,7 +73,7 @@ const Layout = ({ chosenChat, setNewChat, newChat,setSettings,settings,setNewGro
   return (
     <>
       <div className="container">
-        {(newChat || newGroup || settings) ? (
+        {newChat || newGroup || settings ? (
           <div className="left-section">
             <nav>
               <Link className="link" onClick={handleBackClick}>
@@ -83,7 +85,7 @@ const Layout = ({ chosenChat, setNewChat, newChat,setSettings,settings,setNewGro
               <div className="right-side-bar"></div>
             </nav>
           </div>
-        ):(
+        ) : (
           <div className="left-section">
             <nav>
               <div className="left-side-bar">
@@ -110,13 +112,13 @@ const Layout = ({ chosenChat, setNewChat, newChat,setSettings,settings,setNewGro
             {isMenuOpen && (
               <div className="selection-menu">
                 <ul>
-                  <li onClick={() => handleMenuOptionClick("New group")}>
+                  <li onClick={() => handleMenuOptionClickLeft("New group")}>
                     New group
                   </li>
-                  <li onClick={() => handleMenuOptionClick("Settings")}>
+                  <li onClick={() => handleMenuOptionClickLeft("Settings")}>
                     Settings
                   </li>
-                  <li onClick={() => handleMenuOptionClick("Log out")}>
+                  <li onClick={() => handleMenuOptionClickLeft("Log out")}>
                     Log out
                   </li>
                   {/* Add more menu options as needed */}
@@ -129,18 +131,23 @@ const Layout = ({ chosenChat, setNewChat, newChat,setSettings,settings,setNewGro
           <nav>
             <div className="left-side-bar">
               {/* Use the user's image as the profile image */}
-              {chosenChat  ? (
-                <img
-                  className="profile-image"
-                  src={chosenChat.image}
-                  alt="Profile"
-                />
+              {chosenChat ? (
+                <>
+                  <img
+                    className="profile-image"
+                    src={chosenChat.image}
+                    alt="Profile"
+                  />
+                  <p className="chat-name">{chosenChat.name}</p>
+                </>
               ) : (
+                <>
                 <FaUser className="profile-icon" />
+                </>
               )}
             </div>
             <div className="right-side-bar">
-              <Link className="link" to={base_url}>
+              <Link className="link" >
                 <FaSearch className="search-icon" />
               </Link>
               <Link className="link" to={base_url}>
