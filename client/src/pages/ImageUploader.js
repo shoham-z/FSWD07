@@ -6,7 +6,7 @@ const ImageUploader = () => {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [isImageSelected, setIsImageSelected] = useState(false);
+  // const [isImageSelected, setIsImageSelected] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -21,9 +21,29 @@ const ImageUploader = () => {
     }
   };
 
+  const user_id = JSON.parse(localStorage.getItem("user")).id;
+
+
   const handleUpload = () => {
-    // Replace this part with your code to upload the image to the server and save it as the profile image
-    console.log("Image uploaded:", selectedFile);
+    fetch(`${config.uri}/${user_id}/pfp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ selectedFile }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        if (data.message !== "Uploaded successfully") return;
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
+  };
+    
   };
 
   const handleNext = () => {
@@ -59,8 +79,7 @@ const ImageUploader = () => {
         </div>
       </div>
       <div className="next-button-container">
-        <button className="next-button" onClick={() => {
-                        navigate('/messenger/')}}>
+        <button className="next-button" onClick={() => {navigate('/messenger/')}}>
           Next
         </button>
       </div>

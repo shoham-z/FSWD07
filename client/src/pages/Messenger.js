@@ -6,18 +6,38 @@ import Settings from "./Settings";
 import "../styles/Messenger.css";
 import { FaSearch } from "react-icons/fa";
 
-const Messenger = ({ chatData, setChosenChat, newChat, settings, newGroup, contacts, setNewGroup, setNewChat }) => {
-  const user_id = JSON.parse(localStorage.getItem("user")).id;
+const Messenger = ({
+  setChosenChat,
+  newChat,
+  settings,
+  newGroup,
+  contacts,
+  setNewGroup,
+  setNewChat,
+}) => {
+  // const user_id = JSON.parse(localStorage.getItem("user")).id;
+  const chatData = JSON.parse(localStorage.getItem("Chats"))
   const [filteredChatData, setFilteredChatData] = useState(chatData);
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
-
+  const user_id = JSON.parse(localStorage.getItem("user")).id;
   useEffect(() => {
-    // Replace this with your code to fetch the last 10 messages for the selected chat
-    // For example, you can get it from an API based on the selected chat ID
-    // For now, I'm just using a dummy data array as an example
+
+    fetch(`${config.uri}/${user_id}/chats`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        localStorage.setItem('Chats',data.chats)
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
     const dummyMessages = [
-      { id: 1, text: "Message 1 lzjjhfsddhfolashpaoiruijpoajkgboaieupoviwenjgowehmvioiweojgnpkkhehjbgoiaenlkafbvpoifjvnklajjbgpanv lkfsjbghmvowepijn" },
+      {
+        id: 1,
+        text: "Message 1 lzjjhfsddhfolashpaoiruijpoajkgboaieupoviwenjgowehmvioiweojgnpkkhehjbgoiaenlkafbvpoifjvnklajjbgpanv lkfsjbghmvowepijn",
+      },
       { id: 2, text: "Message 2" },
       { id: 3, text: "Message 3" },
       // Add more messages here
@@ -39,7 +59,6 @@ const Messenger = ({ chatData, setChosenChat, newChat, settings, newGroup, conta
 
   const handleChatClick = (chatId) => {
     setChosenChat(chatId);
-    
   };
 
   const handleScroll = () => {
@@ -60,18 +79,23 @@ const Messenger = ({ chatData, setChosenChat, newChat, settings, newGroup, conta
 
   const handelPage = () => {
     if (newChat) {
-      return <NewChats contacts={contacts} setNewGroup = {setNewGroup} setNewChat = {setNewChat}/> 
-    } else if(newGroup){
-      return <NewGroup contacts={contacts} />
+      return (
+        <NewChats
+          contacts={contacts}
+          setNewGroup={setNewGroup}
+          setNewChat={setNewChat}
+        />
+      );
+    } else if (newGroup) {
+      return <NewGroup contacts={contacts} />;
+    } else {
+      return <Settings />;
     }
-    else{
-      return <Settings/>
-    }
-  }
+  };
 
   return (
     <div className="container2">
-      {(newChat || newGroup || settings) ? (
+      {newChat || newGroup || settings ? (
         // Render the appropriate page based on newChat, newGroup, and settings
         handelPage()
       ) : (
@@ -110,7 +134,11 @@ const Messenger = ({ chatData, setChosenChat, newChat, settings, newGroup, conta
           </div>
         </div>
       )}
-      <div className="right-section1" onScroll={handleScroll} ref={messageContainerRef}>
+      <div
+        className="right-section1"
+        onScroll={handleScroll}
+        ref={messageContainerRef}
+      >
         <div className="chat-window">
           {/* Display the messages */}
           {messages.map((message) => (
