@@ -14,6 +14,7 @@ const albumsRouter = require('./routes/albums');
 const photosRouter = require('./routes/photos');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
+const {init_db} = require("./mongoData");
 
 const app = express();
 
@@ -36,5 +37,7 @@ app.use('/api/albums', albumsRouter);
 app.use('/api/photos', photosRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
+
+init_db()
 
 module.exports = app;

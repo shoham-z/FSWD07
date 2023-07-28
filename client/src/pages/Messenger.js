@@ -5,6 +5,8 @@ import NewGroup from "./NewGroup";
 import Settings from "./Settings";
 import "../styles/Messenger.css";
 import { FaSearch } from "react-icons/fa";
+import config from "../config.json";
+
 
 const Messenger = ({
   setChosenChat,
