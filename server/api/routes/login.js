@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getUsername} = require("../mongoData");
+const {getUsername} = require("../dbBridge");
 
 /* POST login section. */
 router.post('/', async function (req, res, next) {

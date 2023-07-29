@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {insert, update, remove, getCollectionById, getTodosByUserId} = require("../mongoData");
+const {insert, update, remove, getCollectionById, getTodosByUserId} = require("../dbBridge");
 const {responseGet} = require("../headers");
 
 /* GET todos listing. */

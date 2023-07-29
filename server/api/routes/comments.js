@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {insert, update, remove, getCommentsByPostId, getCollectionById} = require("../mongoData");
+const {insert, update, remove, getCommentsByPostId, getCollectionById} = require("../dbBridge");
 const {responseGet} = require("../headers");
 
 /* GET comments listing. */

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getUsername, addUser} = require("../mongoData");
+const {getUsername, addUser} = require("../dbBridge");
 
 /* POST register section. */
 router.post('/', async function (req, res, next) {

@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {getUsers} = require("../dbBridge");
 const {responseGet} = require("../headers");
+const {getContactsByUserId} =require("../dbBridge");
 
 /* GET users section. */
 router.get('/', function (req, res, next) {
-    getUsers().then(data => {console.log("data="+data); responseGet(res, data)})
+    console.log(req.query.userPhone)
+    const data = getContactsByUserId(req.query.userPhone);
+    responseGet(res, data)
 });
 
 router.get('/:username', function (req, res, next) {
@@ -15,7 +17,8 @@ router.get('/:username', function (req, res, next) {
 
 /* POST users section. */
 router.post('/', (req, res) => {
-    insert('users', req.body);
+    console.log(req.body)
+
 
     res.status(200).json({message: 'User data received and processed successfully'});
 })
@@ -30,7 +33,7 @@ router.post('/change-password', (req, res) => {
             if (data[0].password === req.body.oldPassword) {
                 updateUsername(req.body.username, req.body.newPassword)
                     .then(_r => success = true)
-                }
+            }
             else {
                 res.status(200).json({message: 'Passwords not matching'});
             }

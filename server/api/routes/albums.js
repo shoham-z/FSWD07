@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {insert, update, remove, getPicturesByAlbumId, getCollectionById, getAlbumsByUserId} = require("../mongoData");
+const {insert, update, remove, getPicturesByAlbumId, getCollectionById, getAlbumsByUserId} = require("../dbBridge");
 const {responseGet} = require("../headers");
 
 /* GET posts listing. */
