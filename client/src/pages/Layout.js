@@ -27,9 +27,8 @@ const Layout = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Replace this with your code to fetch the user's image from somewhere
-    // For example, you can get it from local storage or an API
     const userImageURL = localStorage.getItem("userImage");
+    const userName = localStorage.getItem("userName");
     setUserImage(userImageURL);
   }, []);
 
@@ -37,6 +36,7 @@ const Layout = ({
     setNewGroup(false);
     setNewChat(false);
     setSettings(false);
+    setNewContact(false);
   };
 
   const handleMenuClick = () => {
@@ -48,8 +48,12 @@ const Layout = ({
       return "Settings";
     } else if (newChat) {
       return "New Chat";
-    } else {
+    } else if(newGroup){
       return "New Group";
+    }
+    else{
+      setNewChat(false);
+      return 'New Contact'
     }
   };
 
@@ -75,7 +79,7 @@ const Layout = ({
   return (
     <>
       <div className="container">
-        {newChat || newGroup || settings ? (
+        {newChat || newGroup || settings || newContact ? (
           <div className="left-section">
             <nav>
               <Link className="link" onClick={handleBackClick}>
@@ -123,7 +127,6 @@ const Layout = ({
                   <li onClick={() => handleMenuOptionClickLeft("Log out")}>
                     Log out
                   </li>
-                  {/* Add more menu options as needed */}
                 </ul>
               </div>
             )}
