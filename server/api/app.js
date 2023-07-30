@@ -9,10 +9,6 @@ const logger = require('morgan');
 
 // const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-// const todosRouter = require('./routes/todos');
-// const postsRouter = require('./routes/posts');
-// const commentsRouter = require('./routes/comments');
-// const albumsRouter = require('./routes/albums');
 const pfpRouter = require('./routes/pfp');
 const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
@@ -37,11 +33,6 @@ app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/pfp', pfpRouter);
-
-// app.use('/api/:userId/posts', postsRouter);
-// app.use('/api/:userId/comments', commentsRouter);
-// app.use('/api/:userId/albums', albumsRouter);
-// app.use('/api/:userId/photos', photosRouter);
 
 //init_db()
 
