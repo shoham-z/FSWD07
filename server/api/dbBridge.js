@@ -65,7 +65,6 @@ function init_db() {
       if (err) console.log("the table messages already exist");
       console.log("messages table created");
     });
-  });
 
   addDemoUsers();
 }
