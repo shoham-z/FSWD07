@@ -18,6 +18,8 @@ const Layout = ({
   setNewGroup,
   newGroup,
   chosenContact,
+  setNewContact,
+  newContact
 }) => {
   let navigate = useNavigate();
   const routeParams = useParams();

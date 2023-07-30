@@ -4,6 +4,7 @@ import NewChats from "./NewChats";
 import NewGroup from "./NewGroup";
 import Settings from "./Settings";
 import "../styles/Messenger.css";
+import "../styles/newContact.css";
 import { FaSearch ,FaPaperPlane  } from "react-icons/fa";
 import config from "../config.json";
 
@@ -18,13 +19,14 @@ const Messenger = ({
   contacts,
   setNewGroup,
   setNewChat,
+  setNewContact
 }) => {
   // const user_id = JSON.parse(localStorage.getItem("user")).id;
   const chatData1 = JSON.parse(localStorage.getItem("Chats")) || chatData
   const [filteredChatData, setFilteredChatData] = useState(chatData1);
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
-  const user_id = JSON.parse(localStorage.getItem("user")).id;
+  const user_id = JSON.parse(localStorage.getItem("user"));
 
   const [messageInput, setMessageInput] = useState("");
 
@@ -124,6 +126,7 @@ const Messenger = ({
           contacts={contacts}
           setNewGroup={setNewGroup}
           setNewChat={setNewChat}
+          setNewContact = {setNewContact}
         />
       );
     } else if (newGroup) {
