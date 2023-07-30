@@ -27,23 +27,23 @@ const ImageUploader = () => {
     //const user_id = JSON.parse(localStorage.getItem("user")).id;
 
     const handleUpload = () => {
-        //   fetch(`${config.uri}/${user_id}/pfp`, {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       "Access-Control-Allow-Origin": "*",
-        //     },
-        //     body: JSON.stringify({ selectedFile }),
-        //   })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //       // Handle the response data
-        //       if (data.message !== "Uploaded successfully") return;
-        //     })
-        //     .catch((error) => {
-        //       // Handle any errors
-        //       console.error(error);
-        //     });
+        fetch(`${config.uri}/pfp?phone=${phone}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({pfp}),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the response data
+                if (data.message !== "Uploaded successfully") return;
+            })
+            .catch((error) => {
+                // Handle any errors
+                console.error(error);
+            });
     };
 
     const handleNext = () => {
