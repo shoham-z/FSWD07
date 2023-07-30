@@ -46,13 +46,12 @@ const Layout = ({
   const handelTitle = () => {
     if (settings) {
       return "Settings";
-    } else if (newChat) {
+    } else if (newChat && !newContact) {
       return "New Chat";
     } else if(newGroup){
       return "New Group";
     }
     else{
-      setNewChat(false);
       return 'New Contact'
     }
   };

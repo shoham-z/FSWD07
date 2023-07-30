@@ -104,6 +104,30 @@ function addDemoUsers() {
     });
 }
 
+function addDemoContacts() {
+    console.log("starting to add demo contact to table");
+    const sql =
+        "INSERT INTO users (phone, name, userName, password, email)\n" +
+        "    VALUES\n" + "(1111111111,6666666666,netanel);";
+        con.connect(function (err) {
+            con.query(sql, function (err, result) {
+                if (err) console.log("the table already exist");
+                console.log("contacts added successfully");
+            });
+        });
+    }
+    function addDemoMessages() {
+        console.log("starting to add demo contact to table");
+        const sql =
+            "INSERT INTO users (phone, name, userName, password, email)\n" +
+            "    VALUES\n" + "(1111111111,6666666666,netanel);";
+            con.connect(function (err) {
+                con.query(sql, function (err, result) {
+                    if (err) console.log("the table already exist");
+                    console.log("contacts added successfully");
+                });
+            });
+        }
 //   // server.post("/register", (req, res) => {
 //   //   const {
 //   //     username,
@@ -346,6 +370,22 @@ function getContactsByUserId(userPhone) {
     });
     return response;
 }
+
+function getAllChats(userPhone) {
+    console.log(userPhone);
+    let response;
+    const sql = `SELECT c.name, m.content, m.time
+    FROM contacts c
+    LEFT JOIN messages m ON c.phone1 = m.sender OR c.phone1 = m.receiver OR c.phone2 = m.sender OR c.phone2 = m.receiver
+    WHERE c.phone1 = ${userPhone} OR c.phone2 = ${userPhone}
+    ORDER BY m.time DESC;';`;
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      response = result;
+    });
+    return response;
+  }
 
 function addUser(userData) {
     let response;

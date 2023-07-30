@@ -42,9 +42,8 @@ const NewChats = ({
 
   const handleAddContact = () => {
     setShowNewContact(true); // Set the state to show the NewContact component
-    setNewChat(false);
     setNewContact(true)
-
+    // setNewChat(false);
   };
 
   return (
