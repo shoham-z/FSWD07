@@ -35,13 +35,13 @@ app.use('/api/users', usersRouter);
 app.use('/api/pfp', pfpRouter);
 
 //init_db()
-const userPhone = "1111111111";
-getAllChats(userPhone)
-  .then((result) => {
-    console.log(result);
-    // Process the result here
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// const userPhone = "1111111111";
+// getAllChats(userPhone)
+//   .then((result) => {
+//     console.log(result);
+//     // Process the result here
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 module.exports = app;
