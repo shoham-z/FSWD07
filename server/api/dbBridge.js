@@ -382,13 +382,33 @@ function getAllChats(userPhone) {
     FROM contacts c
     LEFT JOIN messages m ON c.phone1 = m.sender OR c.phone1 = m.receiver OR c.phone2 = m.sender OR c.phone2 = m.receiver
     WHERE c.phone1 = ${userPhone} OR c.phone2 = ${userPhone}
-    ORDER BY m.time DESC;';`;
+    ORDER BY m.time DESC;`;
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(result);
     response = result;
   });
   return response;
+}
+
+
+function getAllChats(userPhone) {
+  console.log(userPhone);
+  const sql = `SELECT c.name, m.content, m.time
+    FROM contacts c
+    LEFT JOIN messages m ON c.phone1 = m.sender OR c.phone1 = m.receiver OR c.phone2 = m.sender OR c.phone2 = m.receiver
+    WHERE c.phone1 = ${userPhone} OR c.phone2 = ${userPhone}
+    ORDER BY m.time DESC;`;
+
+  return new Promise((resolve, reject) => {
+    con.query(sql, [userPhone, userPhone], function (err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 }
 
 function addUser(userData) {
