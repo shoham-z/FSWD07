@@ -10,7 +10,7 @@ const Login = (_props) => {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if (loggedIn) navigate(`/users/${loggedIn}`);
+        if (loggedIn) navigate(`/messenger`);
     })
 
     let handleLogin = (event) => {
@@ -22,7 +22,7 @@ const Login = (_props) => {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            body: JSON.stringify({username: username, password})
+            body: JSON.stringify({username, password})
         })
             .then(response => response.json())
             .then(data => {
@@ -31,7 +31,6 @@ const Login = (_props) => {
                     alert("Login failed\nYour username or password is incorrect")
                     return;
                 }
-                _props.handleLogin();
                 localStorage.setItem("username", username);
                 setLoggedIn(username);
 

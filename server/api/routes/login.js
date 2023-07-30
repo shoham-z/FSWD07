@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const {getUsername} = require("../dbBridge");
+const {getUsername, usernamePasswordMatch} = require("../dbBridge");
 
 /* POST login section. */
 router.post('/', async function (req, res, next) {
     const {username, password} = req.body;
     if (!username || !password) {
-        res.status(400).json({ error: "userName and password are required" });
+        res.status(400).json({error: "userName and password are required"});
         return;
-      }
-    let response = await getUsername(username);
+    }
+    let response = await usernamePasswordMatch(username, password);
     console.log(response)
 
-    if (username === response.userName && password === response.password) {
+    if (response === 0) {
         // Successful login
         res.status(200).setHeader('Access-Control-Allow-Origin', '*');
         res.json({message: 'Login successful'});
