@@ -5,7 +5,7 @@ const {responseGet} = require("../headers");
 
 /* GET users section. */
 router.get('/', function (req, res, next) {
-    getUsers().then(data => {console.log("data="+data); responseGet(res, data)})
+    getUsers().then(data => responseGet(res, data))
 });
 
 // router.get('/:username', function (req, res, next) {

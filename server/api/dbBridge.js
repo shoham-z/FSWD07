@@ -375,9 +375,7 @@ async function getUsers() {
     try {
         const queryPromise = util.promisify(con.query).bind(con);
 
-        const users = await queryPromise(sql);
-        console.log(users); // Process the retrieved users data
-        return users;
+        return await queryPromise(sql);
     } catch (error) {
         console.error("Error fetching users:", error);
     }

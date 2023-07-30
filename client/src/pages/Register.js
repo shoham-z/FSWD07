@@ -49,6 +49,7 @@ const Register = (_props) => {
             .then((data) => {
                 // Handle the response data
                 if (data.message !== "Uploaded successfully") return;
+                alert(data.message)
             })
             .catch((error) => {
                 // Handle any errors
