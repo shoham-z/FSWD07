@@ -12,13 +12,34 @@ const con = mysql.createConnection({
 const queryPromise = util.promisify(con.query).bind(con);
 
 function init_db() {
-  con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-    let sql = "DELETE TABLE users";
-    con.query(sql, function (err, result) {
-      if (err) console.log("the table users already exist");
-      console.log("users Table delete");
+    con.connect(function (err) {
+        if (err) throw err;
+        console.log("Connected!");
+        let sql =
+            "DROP TABLE contacts";
+        con.query(sql, function (err, result) {
+            if (err) console.log('error deleting contacts table: ' + err);
+            else console.log("contacts Table delete");
+        });
+        sql =
+            "DROP TABLE users";
+        con.query(sql, function (err, result) {
+            if (err) console.log('error deleting users table: ' + err);
+            else console.log("users Table delete");
+        });
+        sql =
+            "CREATE TABLE users (phone VARCHAR(255) PRIMARY KEY, name VARCHAR(255), userName VARCHAR(255), password VARCHAR(255), email VARCHAR(255))";
+        con.query(sql, function (err, result) {
+            if (err) console.log('the table users already exist');
+            console.log("users Table created");
+        });
+        sql =
+            "CREATE TABLE contacts (phone1 VARCHAR(255) , phone2 VARCHAR(255) ,FOREIGN KEY (phone1) REFERENCES users(phone),FOREIGN KEY (phone2) REFERENCES users(phone), name VARCHAR(255))";
+        //TODO create the rest of the tables
+        con.query(sql, function (err, result) {
+            if (err) console.log('the table contacts already exist');
+            console.log("contact table created");
+        });
     });
     sql = "DELETE TABLE contacts";
     con.query(sql, function (err, result) {
@@ -327,43 +348,53 @@ function getContactsByUserId(userPhone) {
 }
 
 function addUser(userData) {
-  let response;
-  const insertUserQuery = `INSERT INTO users (phone,name,userName, password, email) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-  const values = [
-    userData.phone,
-    userData.name,
-    userData.userName,
-    userData.password,
-    userData.email,
-  ];
-  con.connect(function (err) {
-    if (err) throw err;
-    // console.log("Connected!");
-  });
-  con.query(insertUserQuery, values, (err, result) => {
-    if (err) {
-      console.error(err);
-      response = -1;
-      //res.status(500).json({ error: "Internal server error" });
-    } else {
-      console.log("User registered successfully");
-      response = 0;
-      //res.json({ message: "User registered successfully" });
-    }
-  });
-  return response;
+    let response;
+    const insertUserQuery = `INSERT INTO users (phone,name,userName, password, email) VALUES (?, ?, ?, ?, ?)`;
+    const values = [userData.phone, userData.name, userData.username, userData.password, userData.email];
+    con.connect(function (err) {
+        if (err) throw err;
+        // console.log("Connected!");
+    });
+    con.query(insertUserQuery, values, (err, result) => {
+        if (err) {
+            console.error(err);
+            response = -1;
+            //res.status(500).json({ error: "Internal server error" });
+        } else {
+            console.log('User registered successfully');
+            response = 0;
+            //res.json({ message: "User registered successfully" });
+        }
+    });
+    return response;
 }
 
 async function getUsers() {
-  const sql = "SELECT * FROM users";
+    const sql = "SELECT * FROM users"
 
-  try {
-    const users = await queryPromise(sql);
-    console.log(users); // Process the retrieved users data
-    return users;
-  } catch (error) {
-    console.error("Error fetching users:", error);
-  }
+    try {
+        const queryPromise = util.promisify(con.query).bind(con);
+
+        const users = await queryPromise(sql);
+        console.log(users); // Process the retrieved users data
+        return users;
+    } catch (error) {
+        console.error("Error fetching users:", error);
+    }
 }
 
-module.exports = { init_db, getContactsByUserId, addUser, getUsers };
+async function getUser(username) {
+    const sql = `SELECT * FROM users WHERE userName='${username}'`;
+
+    try {
+        const queryPromise = util.promisify(con.query).bind(con);
+
+        const user = await queryPromise(sql);
+        console.log(user); // Process the retrieved users data
+        return user;
+    } catch (error) {
+        console.error("Error fetching users:", error);
+    }
+}
+
+module.exports = {init_db, getContactsByUserId, addUser, getUsers, getUser};

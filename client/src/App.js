@@ -161,7 +161,7 @@ function App() {
           <Route path="/" element={<Navigate to="/register" replace />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
-          <Route exact path="/ImageUploader" element={<ImageUploader />} />
+          <Route exact path="/pfp" element={<ImageUploader />} />
           {/* <Route path="/login" element={<Login />} /> */}
           <Route element={<Layout chosenChat={chatData[chosenChat  - 1]} newContact = {newContact}  setNewContact = {setNewContact} chosenContact={chosenOne} setNewChat = {setNewChat} newChat = {newChat} setSettings = {setSettings} settings = {settings} setNewGroup = {setNewGroup} newGroup = {newGroup} />}>
             <Route path="/messenger" element={<Messenger contacts={contacts} setNewContact = {setNewContact} chatData={chatData} setChosenChat={setChosenChat} chosenChat = {chosenChat}  newChat = {newChat} newGroup = {newGroup} setNewGroup = {setNewGroup} settings = {settings} setChosenContact = {setChosenContact} setNewChat = {setNewChat}/>}/>

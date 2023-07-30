@@ -1,20 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const {getUsername, addUser} = require("../dbBridge");
+const {addUser, getUser} = require("../dbBridge");
 
 /* POST register section. */
 router.post('/', async function (req, res, next) {
-    const {username, password} = req.body;
+    const {username, password, name, phone, email} = req.body;
 
-    let response = await getUsername(username);
+    console.log(req.body)
 
-    console.log(response)
-    if (!response) {
+    let response = await getUser(username);
+
+    console.log("got user: " + response)
+
+    if (response) {
         // Successful register
 
-        addUser(username, password).then(r => {
-            if (r !== 0) console.log("bad register")
-        });
+        const response = addUser(req.body)
+
+        if (response !== 0) console.log("bad register")
+
         res.status(200).setHeader('Access-Control-Allow-Origin', '*');
         res.json({message: 'Register successful'});
     } else {
