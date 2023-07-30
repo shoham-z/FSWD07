@@ -158,7 +158,7 @@ function App() {
       </BrowserRouter> */}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/register" replace />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           {/* <Route exact path="/pfp" element={<ImageUploader />} /> */}

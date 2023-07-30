@@ -1,24 +1,49 @@
 import React, { useState } from "react";
+import config from "../config.json";
 
-const NewContact = () => {
-  const [contactName, setContactName] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
+const NewContact = (prop) => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleNameChange = (event) => {
-    setContactName(event.target.value);
+    setName(event.target.value);
   };
 
   const handleNumberChange = (event) => {
-    setContactNumber(event.target.value);
+    setPhone(event.target.value);
   };
 
-  const handleSaveContact = () => {
-    // Add your logic here to save the new contact
-    // For example, you can use the contactName and contactNumber states
+  const saveContact = (event) => {
+      event.preventDefault();
+
+      fetch(`${config.uri}/contacts?userPhone=${prop.phone}`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify({name, phone})
+      })
+          .then(response => response.json())
+          .then(data => {
+              // Handle the response data
+              if (data.message !== "New contact successful") {
+                  alert("Failed to save the contact")
+                  return;
+              }
+
+              alert(data.message)
+
+          })
+          .catch(error => {
+              // Handle any errors
+              alert("Could not save the contact")
+              console.error(error);
+          });
   };
 
   return (
-    <div className="new-contact-container">
+    <form onSubmit={saveContact}>
       <div className="input-container">
         <input
           onChange={handleNameChange}
@@ -36,11 +61,11 @@ const NewContact = () => {
         />
       </div>
       <div className="button-container">
-        <button className="save-button" onClick={handleSaveContact}>
+        <button className="save-button" type="submit">
           Save
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -28,7 +28,7 @@ const Layout = ({
 
   useEffect(() => {
     const userImageURL = localStorage.getItem("userImage");
-    const userName = localStorage.getItem("userName");
+    const userName = localStorage.getItem("username");
     setUserImage(userImageURL);
   }, []);
 
