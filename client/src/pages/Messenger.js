@@ -26,7 +26,8 @@ const Messenger = ({
   const [filteredChatData, setFilteredChatData] = useState(chatData1);
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
-  const user_id = JSON.parse(localStorage.getItem("user"));
+  const username = localStorage.getItem("username");
+  const [phone, setPhone] = useState(0);
 
   const [messageInput, setMessageInput] = useState("");
 
@@ -52,18 +53,21 @@ const Messenger = ({
     }
   };
 
+  useEffect(()=>{
+    fetch(`${config.uri}/users/phone?username=${username}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setPhone(data)
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error);
+        });
+  }, [username])
+
   useEffect(() => {
 
-    fetch(`${config.uri}/${user_id}/chats`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data
-        localStorage.setItem('Chats',data.chats)
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error(error);
-      });
+
     
     const dummyMessages = [
       {
@@ -90,7 +94,7 @@ const Messenger = ({
   };
 
   const handleChatClick = (chatId) => {
-    console.log(chatId)
+   /* console.log(chatId)
     setChosenChat(chatId);
     fetch(`${config.uri}/${user_id}/${chatId}/messages`)
       .then((response) => response.json())
@@ -101,11 +105,11 @@ const Messenger = ({
       .catch((error) => {
         // Handle any errors
         console.error(error);
-      });
+      });*/
   };
 
   const handleScroll = () => {
-    fetch(`${config.uri}/${user_id}/${chosenChat}/messages`)
+   /* fetch(`${config.uri}/${user_id}/${chosenChat}/messages`)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -116,7 +120,7 @@ const Messenger = ({
       .catch((error) => {
         // Handle any errors
         console.error(error);
-      }); 
+      });*/
   };
 
   const handelPage = () => {
@@ -127,6 +131,7 @@ const Messenger = ({
           setNewGroup={setNewGroup}
           setNewChat={setNewChat}
           setNewContact = {setNewContact}
+          userphone={phone}
         />
       );
     } else if (newGroup) {

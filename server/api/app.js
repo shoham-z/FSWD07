@@ -13,7 +13,7 @@ const pfpRouter = require('./routes/pfp');
 const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
-const {init_db, addDemoMessages, addDemoContacts, getAllChats, getUsers} = require("./dbBridge");
+const {init_db} = require("./dbBridge");
 
 const app = express();
 

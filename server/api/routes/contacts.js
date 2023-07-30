@@ -1,50 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const {responseGet} = require("../headers");
-const {getContactsByUserId} =require("../dbBridge");
+const {getContactsByUserId, addContact, getContacts} = require("../dbBridge");
 
-/* GET users section. */
+/* GET contacts section. */
 router.get('/', function (req, res, next) {
     console.log(req.query.userPhone)
-    const data = getContactsByUserId(req.query.userPhone);
-    responseGet(res, data)
+    const p = req.query.userPhone ? getContactsByUserId(req.query.userPhone) : getContacts()
+    p.then(data => responseGet(res, data))
 });
 
-router.get('/:username', function (req, res, next) {
-    console.log(req.params.username)
-    getCollectionByUsername('users', req.params.username).then(data => responseGet(res, data));
-});
-
-/* POST users section. */
+/* POST contacts section. */
 router.post('/', (req, res) => {
-    console.log(req.body)
+    console.log(req.query.userPhone, req.body)
+    addContact(req.query.userPhone, req.body)
+        .then(response => {
+            if (response === 0) res.status(200).json({message: 'New contact successful'});
+        })
+        .catch(err => console.log(err))
 
 
-    res.status(200).json({message: 'User data received and processed successfully'});
-})
-
-router.post('/change-password', (req, res) => {
-    console.log('coming to change password')
-
-    let success = false;
-
-    getCollectionByUsername('loginCredentials', req.body.username)
-        .then(data => {
-            if (data[0].password === req.body.oldPassword) {
-                updateUsername(req.body.username, req.body.newPassword)
-                    .then(_r => success = true)
-            }
-            else {
-                res.status(200).json({message: 'Passwords not matching'});
-            }
-        });
-
-
-    if (success) {res.status(200).json({message: 'Password Changed'}); console.log("Password Changed")}
 })
 
 
-/* PUT users section. */
+/* PUT contacts section. */
 router.put('/', (req, res) => {
     let data = req.body;
 
@@ -54,7 +33,7 @@ router.put('/', (req, res) => {
 })
 
 
-/* DELETE users section. */
+/* DELETE contacts section. */
 router.delete('/', (req, res) => {
     let data = req.body;
 
