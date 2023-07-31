@@ -41,7 +41,7 @@ const Messenger = ({
       // For simplicity, we'll just create a dummy message object
       const newMessage = {
         id: messages.length + 1, // You may want to generate a unique ID
-        name: "Your Name", // Replace with the sender's name
+        name: username, // Replace with the sender's name
         text: messageInput,
       };
 
@@ -96,7 +96,7 @@ const Messenger = ({
   const handleChatClick = (chatId) => {
     console.log(chatId)
     setChosenChat(chatId);
-    fetch(`${config.uri}/messages?userPhone=${'1111111111'}&contactPhone=${chatId}`)
+    fetch(`${config.uri}/messages?userPhone=${phone}&contactPhone=${chatId}`)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
