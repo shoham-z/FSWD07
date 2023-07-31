@@ -21,6 +21,7 @@ const NewChats = ({
 
     const handleSearch = (event) => {
         const value = event.target.value;
+        if(value==="") return;
 
         // Filter the chat data based on the input value
         const filteredContact = contacts.filter((chat) =>
@@ -87,9 +88,9 @@ const NewChats = ({
                             </li>
                             {filteredContactData.map((contact) => (
                                 <li
-                                    key={`${contact.id}a`}
+                                    key={`${contact.phone2}`}
                                     className="chat-item"
-                                    onClick={() => handleContactClick(contact.id)}
+                                    onClick={() => handleContactClick(contact.phone2)}
                                 >
                                     <img
                                         src="https://via.placeholder.com/50"
