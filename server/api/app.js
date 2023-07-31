@@ -14,6 +14,7 @@ const messagesRouter = require('./routes/messages');
 const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
+const chatRouter = require('./routes/chat');
 const {init_db, addMessage, getMessages} = require("./dbBridge");
 
 const app = express();
@@ -35,6 +36,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/pfp', pfpRouter);
+app.use('/api/chats', chatRouter);
 
 //init_db()
 // const userPhone = "1111111111";

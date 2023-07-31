@@ -34,7 +34,7 @@ function init_db() {
             console.log("users Table created");
         });
         sql =
-            "CREATE TABLE contacts (phone1 VARCHAR(255) , phone2 VARCHAR(255) ,FOREIGN KEY (phone1) REFERENCES users(phone),FOREIGN KEY (phone2) REFERENCES users(phone), name VARCHAR(255))";
+            "CREATE TABLE contacts (phone1 VARCHAR(255) , phone2 VARCHAR(255) ,FOREIGN KEY (phone1) REFERENCES users(phone),FOREIGN KEY (phone2) REFERENCES users(phone), name VARCHAR(255), UNIQUE (phone1, phone2))";
         //TODO create the rest of the tables
         con.query(sql, function (err, _result) {
             if (err) console.log("the table contacts already exist");
@@ -526,11 +526,11 @@ async function addMessage(userPhone, contact, content, time) {
     }
 }
 
-async function getMessages(phon1, phone2) {
+async function getMessages(phone1, phone2) {
     const sql = `SELECT *
     FROM messages
-    WHERE (phone1 = '${phon1}' AND phone2 = '${phone2}')
-       OR (phone1 = '${phone2}' AND phone2 = '${phon1}')
+    WHERE (phone1 = '${phone1}' AND phone2 = '${phone2}')
+       OR (phone1 = '${phone2}' AND phone2 = '${phone1}')
     ORDER BY time DESC
     LIMIT 10;`;
 
@@ -560,6 +560,38 @@ async function getUserPhone(username) {
     }
 }
 
+async function getChats(phone) {
+    const sql = `SELECT DISTINCT
+    LEAST(m.phone1, m.phone2) AS phone1,
+    GREATEST(m.phone1, m.phone2) AS phone2,
+    c.name AS contact_name
+FROM
+    messages m
+JOIN
+    contacts c ON (m.phone1 = c.phone1 AND m.phone2 = c.phone2)
+        OR (m.phone1 = c.phone2 AND m.phone2 = c.phone1)
+WHERE
+    m.phone1 = '0587654321' OR
+    m.phone2 = '0587654321';`;
+
+    try {
+        const queryPromise = util.promisify(con.query).bind(con);
+
+        const messages = await queryPromise(sql);
+        messages.forEach(obj=> {
+            obj.name = obj.contact_name;
+            delete obj.contact_name;
+            obj.phone = obj.phone2;
+            delete obj.phone2;
+            delete obj.phone1;
+        });
+        console.log(messages); // Process the retrieved messages data
+        return messages;
+    } catch (error) {
+        console.error("Error fetching messages:", error);
+    }
+}
+
 module.exports = {
     init_db,
     getUserContacts,
@@ -571,5 +603,6 @@ module.exports = {
     getContacts,
     getUserPhone,
     addMessage,
-    getMessages
+    getMessages,
+    getChats
 };
