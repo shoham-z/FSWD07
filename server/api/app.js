@@ -15,7 +15,7 @@ const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const chatRouter = require('./routes/chat');
-const {init_db, addMessage, getMessages} = require("./dbBridge");
+const {init_db, addMessage, getMessages, getChats} = require("./dbBridge");
 
 const app = express();
 
@@ -50,6 +50,7 @@ app.use('/api/chats', chatRouter);
 //   });
 //const contact = { phone : "6666666666"}
 //addMessage('1111111111',contact.phone,"hi my name is yehuda",'2023-07-19 18:30:00')
-// getMessages('1111111111',contact.phone)
+getMessages('4442225555','0546457095')
 // getContacts()
+// getChats('4442225555')
 module.exports = app;

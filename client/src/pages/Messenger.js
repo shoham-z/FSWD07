@@ -72,27 +72,13 @@ const Messenger = ({
         // Handle any errors
         console.error(error);
       });
-  }, [phone]);
+  }, []);
 
   useEffect(() => {
     setFilteredChatData(chatData);
   }, [chatData]);
 
-  //get messages
-  useEffect(() => {
-    const dummyMessages = [
-      {
-        id: 1,
-        text: "Message 1 lzjjhfsddhfolashpaoiruijpoajkgboaieupoviwenjgowehmvioiweojgnpkkhehjbgoiaenlkafbvpoifjvnklajjbgpanv lkfsjbghmvowepijn",
-      },
-      { id: 2, text: "Message 2" },
-      { id: 3, text: "Message 3" },
-      // Add more messages here
-    ];
-
-    setMessages(dummyMessages);
-  }, [setChosenChat]); // Fetch messages when the selected chat changes
-
+ 
   const handleChangeMessage = (event) => {
     setMessageInput(event.target.value);
   };
