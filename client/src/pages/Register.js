@@ -24,7 +24,7 @@ const Register = (_props) => {
 
     const handlePhotoChange = (event) => {
         const file = event.target.files[0];
-        console.log(file)
+        //console.log(file)
         setPfp(file);
         // Create a preview of the selected image
         if (file) {
@@ -40,7 +40,6 @@ const Register = (_props) => {
         const formData = new FormData();
         formData.append('pfp', pfp, phone+'pfp.png');
 
-        console.log(formData)
         fetch(`${config.uri}/pfp?phone=${phone}`, {
             method: "POST",
             body: formData,
@@ -54,6 +53,7 @@ const Register = (_props) => {
             .catch((error) => {
                 // Handle any errors
                 console.log(error);
+                alert(error)
             });
     };
 

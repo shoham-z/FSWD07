@@ -5,6 +5,7 @@
 
 /* Styles for the left section */
 .right-section1 {
+  border-left: #00BFFF 2px solid;
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -75,6 +76,7 @@
 
 /* Styles for the chat window */
 .chat-window {
+
   flex: 1;
   padding: 10px;
   overflow-y: auto;

@@ -17,7 +17,6 @@ const Layout = ({
   settings,
   setNewGroup,
   newGroup,
-  chosenContact,
   setNewContact,
   newContact
 }) => {
@@ -43,7 +42,7 @@ const Layout = ({
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handelTitle = () => {
+  const handleTitle = () => {
     if (settings) {
       return "Settings";
     } else if (newChat && !newContact) {
@@ -86,7 +85,7 @@ const Layout = ({
                 <FaArrowLeft className="back-icon" />
               </Link>
               <div className="left-side-bar">
-                <h2>{handelTitle()}</h2>
+                <h2>{handleTitle()}</h2>
               </div>
               <div className="right-side-bar"></div>
             </nav>

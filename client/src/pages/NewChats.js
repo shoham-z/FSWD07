@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {FaUserFriends, FaUsers, FaSearch, FaUserPlus} from "react-icons/fa";
 import NewGroup from "./NewGroup";
 import NewContact from "./newContact";
+import config from "../config.json";
 
 const NewChats = ({
                       userphone,
@@ -15,7 +16,9 @@ const NewChats = ({
     const [filteredContactData, setFilteredContactData] = useState(contacts);
     const [showNewContact, setShowNewContact] = useState(false);
     let navigate = useNavigate();
-  
+
+
+
     const handleSearch = (event) => {
         const value = event.target.value;
 
@@ -84,7 +87,7 @@ const NewChats = ({
                             </li>
                             {filteredContactData.map((contact) => (
                                 <li
-                                    key={contact.id}
+                                    key={`${contact.id}a`}
                                     className="chat-item"
                                     onClick={() => handleContactClick(contact.id)}
                                 >

@@ -16,7 +16,6 @@ const Messenger = ({
   newChat,
   settings,
   newGroup,
-  contacts,
   setNewGroup,
   setNewChat,
   setNewContact
@@ -28,8 +27,54 @@ const Messenger = ({
   const messageContainerRef = useRef(null);
   const username = localStorage.getItem("username");
   const [phone, setPhone] = useState(0);
+  const [contacts, setContacts] = useState([]);
+
 
   const [messageInput, setMessageInput] = useState("");
+
+  //get contacts
+  useEffect(() => {
+    fetch(`${config.uri}/contacts?userPhone=${phone}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setContacts(data)
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error);
+        });
+  }, [phone])
+
+  //get user phone
+  useEffect(()=>{
+    fetch(`${config.uri}/users/phone?username=${username}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          console.log(username)
+          setPhone(data)
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error);
+        });
+  }, [username])
+
+  //get messages
+  useEffect(() => {
+
+    const dummyMessages = [
+      {
+        id: 1,
+        text: "Message 1 lzjjhfsddhfolashpaoiruijpoajkgboaieupoviwenjgowehmvioiweojgnpkkhehjbgoiaenlkafbvpoifjvnklajjbgpanv lkfsjbghmvowepijn",
+      },
+      { id: 2, text: "Message 2" },
+      { id: 3, text: "Message 3" },
+      // Add more messages here
+    ];
+
+    setMessages(dummyMessages);
+  }, [setChosenChat]); // Fetch messages when the selected chat changes
 
   const handleChangeMessage = (event) => {
     setMessageInput(event.target.value);
@@ -53,37 +98,6 @@ const Messenger = ({
     }
   };
 
-  useEffect(()=>{
-    fetch(`${config.uri}/users/phone?username=${username}`)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data)
-          console.log(username)
-          setPhone(data)
-        })
-        .catch((error) => {
-          // Handle any errors
-          console.error(error);
-        });
-  }, [username])
-
-  useEffect(() => {
-
-
-    
-    const dummyMessages = [
-      {
-        id: 1,
-        text: "Message 1 lzjjhfsddhfolashpaoiruijpoajkgboaieupoviwenjgowehmvioiweojgnpkkhehjbgoiaenlkafbvpoifjvnklajjbgpanv lkfsjbghmvowepijn",
-      },
-      { id: 2, text: "Message 2" },
-      { id: 3, text: "Message 3" },
-      // Add more messages here
-    ];
-
-    setMessages(dummyMessages);
-  }, [setChosenChat]); // Fetch messages when the selected chat changes
-
   const handleSearch = (event) => {
     const value = event.target.value;
 
@@ -98,7 +112,7 @@ const Messenger = ({
   const handleChatClick = (chatId) => {
     console.log(chatId)
     setChosenChat(chatId);
-    fetch(`${config.uri}/messages?userPhone=${1111111111}&contactPhone=${chatId}`)
+    fetch(`${config.uri}/messages?userPhone=${phone}&contactPhone=${chatId}`)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -126,7 +140,7 @@ const Messenger = ({
       });*/
   };
 
-  const handelPage = () => {
+  const handlePage = () => {
     if (newChat) {
       return (
         <NewChats
@@ -135,6 +149,7 @@ const Messenger = ({
           setNewChat={setNewChat}
           setNewContact = {setNewContact}
           userphone={phone}
+          setChosenContactChat={handleChatClick}
         />
       );
     } else if (newGroup) {
@@ -148,7 +163,7 @@ const Messenger = ({
     <div className="container2">
       {newChat || newGroup || settings ? (
         // Render the appropriate page based on newChat, newGroup, and settings
-        handelPage()
+        handlePage()
       ) : (
         <div className="left-section1">
           <nav className="search">
@@ -192,6 +207,7 @@ const Messenger = ({
       >
         <div className="chat-window">
           {/* Display the messages */}
+          {messages.length===0 && <h2>No messages yet</h2>}
           {messages.map((message) => (
             <div key={message.id} className="message">
               <div className="Sender">{message.name}</div>
