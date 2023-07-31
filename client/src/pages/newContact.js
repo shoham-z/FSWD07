@@ -61,7 +61,7 @@ const NewContact = (prop) => {
         />
       </div>
       <div className="button-container">
-        <button className="save-button" type="submit">
+        <button className="save-button" type="submit" onClick={() => {prop.setContacts((t) => [...t,{name:name,phone1:prop.phone,phone2:phone}])}}>
           Save
         </button>
       </div>

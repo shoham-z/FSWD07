@@ -501,7 +501,7 @@ async function addContact(userphone, contact) {
     const values = [userphone, contact.phone, contact.name];
     //console.log(values)
     try {
-        await con.execute(query, values);
+        con.execute(query, values);
 
         console.log("success");
         return 0;
