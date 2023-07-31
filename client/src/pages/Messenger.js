@@ -57,6 +57,8 @@ const Messenger = ({
     fetch(`${config.uri}/users/phone?username=${username}`)
         .then((response) => response.json())
         .then((data) => {
+          console.log(data)
+          console.log(username)
           setPhone(data)
         })
         .catch((error) => {

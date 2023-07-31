@@ -28,7 +28,7 @@ const Layout = ({
 
   useEffect(() => {
     const userImageURL = localStorage.getItem("userImage");
-    const userName = localStorage.getItem("username");
+    //const userName = localStorage.getItem("username");
     setUserImage(userImageURL);
   }, []);
 
@@ -66,6 +66,7 @@ const Layout = ({
       setNewGroup(false);
       setNewChat(false);
     } else {
+      localStorage.removeItem("username")
       navigate("/login");
     }
     // Handle the selection menu option click here

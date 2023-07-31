@@ -16,6 +16,8 @@ const Login = (_props) => {
     let handleLogin = (event) => {
         event.preventDefault();
 
+        console.log({username, password})
+
         fetch(`${config.uri}/login`, {
             method: 'POST',
             headers: {
