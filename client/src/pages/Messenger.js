@@ -100,6 +100,7 @@ const Messenger = ({
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
+        console.log(data);
         setMessages(data)
       })
       .catch((error) => {
