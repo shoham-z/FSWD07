@@ -46,8 +46,8 @@ app.use('/api/pfp', pfpRouter);
 //   .catch((error) => {
 //     console.error(error);
 //   });
-// const contact = { phone : "6666666666"}
-// addMessage('1111111111',contact,"hi my name is yehuda",'08:15:00')
+const contact = { phone : "6666666666"}
+addMessage('1111111111',contact.phone,"hi my name is yehuda",'2023-07-19 18:30:00')
 // getMessages('1111111111',contact.phone)
 // getContacts()
 module.exports = app;
