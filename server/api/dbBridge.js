@@ -571,8 +571,8 @@ JOIN
     contacts c ON (m.phone1 = c.phone1 AND m.phone2 = c.phone2)
         OR (m.phone1 = c.phone2 AND m.phone2 = c.phone1)
 WHERE
-    m.phone1 = '0587654321' OR
-    m.phone2 = '0587654321';`;
+    m.phone1 = '${phone}' OR
+    m.phone2 = '${phone}';`;
 
     try {
         const queryPromise = util.promisify(con.query).bind(con);
