@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {responseGet} = require("../headers");
-const {getContactsByUserId, addContact, getContacts} = require("../dbBridge");
+const {getUserContacts, addContact, getContacts} = require("../dbBridge");
 
 /* GET contacts section. */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res, _next) {
     console.log(req.query.userPhone)
-    const p = req.query.userPhone ? getContactsByUserId(req.query.userPhone) : getContacts()
+    const p = req.query.userPhone ? getUserContacts(req.query.userPhone) : getContacts()
     p.then(data => responseGet(res, data))
 });
 
@@ -18,8 +18,6 @@ router.post('/', (req, res) => {
             if (response === 0) res.status(200).json({message: 'New contact successful'});
         })
         .catch(err => console.log(err))
-
-
 })
 
 

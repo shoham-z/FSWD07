@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {getUsername, usernamePasswordMatch} = require("../dbBridge");
+const {usernamePasswordMatch} = require("../dbBridge");
 
 /* POST login section. */
-router.post('/', async function (req, res, next) {
+router.post('/', async function (req, res, _next) {
     const {username, password} = req.body;
+    console.log(req.body)
     if (!username || !password) {
         res.status(400).json({error: "userName and password are required"});
         return;

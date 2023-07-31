@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const {getUsers, getContactsByUserId, getContacts, getUserPhone} = require("../dbBridge");
+const {getUsers, getUserPhone} = require("../dbBridge");
 const {responseGet} = require("../headers");
 
 /* GET users section. */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res, _next) {
     getUsers().then(data => responseGet(res, data))
 });
 
-router.get('/phone', function (req, res, next) {
+router.get('/phone', function (req, res, _next) {
     console.log(req.query.username)
     getUserPhone(req.query.username).then(data => responseGet(res, data))
 });
