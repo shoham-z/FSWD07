@@ -17,15 +17,15 @@ function init_db() {
             if (err) console.log("error deleting contacts table: " + err);
             else console.log("contacts Table delete");
         });
-        sql = "DROP TABLE users";
-        con.query(sql, function (err, _result) {
-            if (err) console.log("error deleting users table: " + err);
-            else console.log("users Table delete");
-        });
         sql = "DROP TABLE messages";
         con.query(sql, function (err, _result) {
             if (err) console.log("error deleting messages table: " + err);
             else console.log("messages Table delete");
+        });
+        sql = "DROP TABLE users";
+        con.query(sql, function (err, _result) {
+            if (err) console.log("error deleting users table: " + err);
+            else console.log("users Table delete");
         });
         sql =
             "CREATE TABLE users (phone VARCHAR(255) PRIMARY KEY, name VARCHAR(255), userName VARCHAR(255), password VARCHAR(255), email VARCHAR(255))";
@@ -41,7 +41,7 @@ function init_db() {
             console.log("contact table created");
         });
         sql =
-            "CREATE TABLE messages (phone1 VARCHAR(255) , phone2 VARCHAR(255) ,FOREIGN KEY (phone1) REFERENCES users(phone),FOREIGN KEY (phone2) REFERENCES users(phone),content VARCHAR(255),time TIME)";
+            "CREATE TABLE messages (phone1 VARCHAR(255) , phone2 VARCHAR(255) ,FOREIGN KEY (phone1) REFERENCES users(phone),FOREIGN KEY (phone2) REFERENCES users(phone),content VARCHAR(255),time DATETIME)";
         con.query(sql, function (err, _result) {
             if (err) console.log("the table messages already exist");
             console.log("messages table created");
@@ -511,10 +511,10 @@ async function addContact(userphone, contact) {
     }
 }
 
-async function addMessage(userPhone, contact, content) {
-    console.log(userPhone,contact,content.content,content.time)
+async function addMessage(userPhone, contact, content, time) {
     const query = "INSERT INTO messages (phone1, phone2, content,time) VALUES (?, ?, ?, ?)";
-    const values = [userPhone, contact, content.content, content.time];
+    const values = [userPhone, contact, content, time];
+    //console.log(values)
     try {
         await con.execute(query, values);
 

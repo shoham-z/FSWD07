@@ -10,19 +10,18 @@ import config from "../config.json";
 
 
 const Messenger = ({
-  chatData,
-  setChosenChat,
-  chosenChat,
-  newChat,
-  settings,
-  newGroup,
-  setNewGroup,
-  setNewChat,
-  setNewContact
+                     setNewContact,
+                     setChosenChat,
+                     chosenChat,
+                     newChat,
+                     newGroup,
+                     setNewGroup,
+                     settings,
+                     setNewChat
 }) => {
   // const user_id = JSON.parse(localStorage.getItem("user")).id;
-  const chatData1 = JSON.parse(localStorage.getItem("Chats")) || chatData
-  const [filteredChatData, setFilteredChatData] = useState(chatData1);
+  const [chatData, setChatData] = useState(JSON.parse(localStorage.getItem("Chats")) || [])
+  const [filteredChatData, setFilteredChatData] = useState(chatData);
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
   const username = localStorage.getItem("username");
@@ -31,7 +30,6 @@ const Messenger = ({
 
 
   const [messageInput, setMessageInput] = useState("");
-  const [sentTime, setSentTime] = useState("");
 
   //get contacts
   useEffect(() => {
@@ -82,15 +80,40 @@ const Messenger = ({
   };
 
   const handleSendMessage = () => {
-    let theMessage;
     if (messageInput.trim() !== "") {
-      
-      const newMessage = { 
-        id: chosenChat,
+
+      const newMessage = {
+        sender: phone,
+        recipient: "1111111111",
         content: messageInput,
-        time: sentTime,
+        time: new Date().toISOString().slice(0, 19).replace('T', ' ')
       };
-      theMessage = newMessage
+
+      fetch(`${config.uri}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify(newMessage)
+      })
+          .then(response => response.json())
+          .then(data => {
+            // Handle the response data
+            if (data.message !== "Login successful") {
+              alert("Login failed\nYour username or password is incorrect")
+              return;
+            }
+            localStorage.setItem("username", username);
+
+          })
+          .catch(error => {
+            // Handle any errors
+            alert("Login failed")
+            console.error(error);
+          });
+
+      //handleChatClick(chosenChat);
 
       // Add the new message to the beginning of the messages list
       setMessages((prevMessages) => [newMessage, ...prevMessages]);
@@ -98,38 +121,13 @@ const Messenger = ({
       // Clear the message input after sending the message
       setMessageInput("");
     }
-
-    fetch(`${config.uri}/contacts?userPhone=${phone}&contactPhone=${chosenChat}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({theMessage})
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data
-            if (data.message !== "1") {
-                alert("Failed to save the message")
-                return;
-            }
-
-            alert(data.message)
-
-        })
-        .catch(error => {
-            // Handle any errors
-            alert("Could not save the message")
-            console.error(error);
-        });
   };
 
   const handleSearch = (event) => {
     const value = event.target.value;
 
     // Filter the chat data based on the input value
-    const filteredChats = chatData1.filter((chat) =>
+    const filteredChats = chatData.filter((chat) =>
       chat.name.toLowerCase().includes(value.toLowerCase())
     );
 

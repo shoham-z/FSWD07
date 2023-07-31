@@ -11,10 +11,11 @@ router.get('/',function(req,res,next){
 })
 
 router.post('/', (req, res) => {
-    console.log(req.query.userPhone, req.body)
-    addMessage(req.query.userPhone, req.query.contactPhone,req.body)
+    console.log(req.body)
+    addMessage(req.body.sender, req.body.recipient, req.body.content, req.body.time )
         .then(response => {
-            if (response === 0) res.status(200).json({message: '1'});
+            if (response === 0) res.status(200).json({message: 'Send message successful'});
+            else res.status(500);
         })
         .catch(err => console.log(err))
 })

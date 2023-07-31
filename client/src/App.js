@@ -16,124 +16,11 @@ function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentUsername, setCurrentUsername] = useState(null);
   const [chosenChat, setChosenChat] = useState(null);
-  const [chosenContact, setChosenContact] = useState(null);
   const [newChat, setNewChat] = useState(false);
   const [newGroup, setNewGroup] = useState(false);
   const [settings, setSettings] = useState(false);
   const [newContact, setNewContact] = useState(false);
-  const chatData = [
-    {
-      id: 1,
-      name: "Chat 1",
-      lastMessage: "Hey, how are you?",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 2,
-      name: "Chat 2",
-      lastMessage: "What's up?",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 3,
-      name: "Chat 3",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 4,
-      name: "Chat 4",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 5,
-      name: "Chat 5 1",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 6,
-      name: "Chat 6",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 7,
-      name: "Chat 7",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-  ];
 
-  const notChosen = {
-    id: ' ',
-    name: " ",
-    lastMessage: " ",
-    image:
-      " ",
-  }
- 
-  const contacts = [
-    {
-      id: 1,
-      name: "Chat 1",
-      lastMessage: "Hey, how are you?",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 2,
-      name: "Chat 2",
-      lastMessage: "What's up?",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 3,
-      name: "Chat 3",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 4,
-      name: "Chat 4",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 5,
-      name: "Chat 5 1",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 6,
-      name: "Chat 6",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-    {
-      id: 7,
-      name: "Chat 7",
-      lastMessage: "Let's catch up!",
-      image:
-        "https://www.photo-art.co.il/wp-content/uploads/2015/09/BY1A4457.jpg",
-    },
-  ];
-  let chosenOne  = contacts[chosenContact]||notChosen
-  console.log(chosenOne)
   return (
     <CurrentUserContext.Provider
       value={{
@@ -161,8 +48,22 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
-          <Route element={<Layout chosenChat={chatData[chosenChat  - 1]} newContact = {newContact}  setNewContact = {setNewContact} chosenContact={chosenOne} setNewChat = {setNewChat} newChat = {newChat} setSettings = {setSettings} settings = {settings} setNewGroup = {setNewGroup} newGroup = {newGroup} />}>
-            <Route path="/messenger" element={<Messenger contacts={contacts} setNewContact = {setNewContact} chatData={chatData} setChosenChat={setChosenChat} chosenChat = {chosenChat}  newChat = {newChat} newGroup = {newGroup} setNewGroup = {setNewGroup} settings = {settings} setChosenContact = {setChosenContact} setNewChat = {setNewChat}/>}/>
+          <Route element={<Layout newContact = {newContact}
+                                  setNewContact = {setNewContact}
+                                  setNewChat = {setNewChat}
+                                  newChat = {newChat}
+                                  setSettings = {setSettings}
+                                  settings = {settings}
+                                  setNewGroup = {setNewGroup}
+                                  newGroup = {newGroup} />}>
+            <Route path="/messenger" element={<Messenger setNewContact = {setNewContact}
+                                                         setChosenChat={setChosenChat}
+                                                         chosenChat = {chosenChat}
+                                                         newChat = {newChat}
+                                                         newGroup = {newGroup}
+                                                         setNewGroup = {setNewGroup}
+                                                         settings = {settings}
+                                                         setNewChat = {setNewChat}/>}/>
           </Route>
           <Route path="*" element={<NoPage />} />
         </Routes>
