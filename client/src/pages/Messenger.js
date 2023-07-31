@@ -94,9 +94,9 @@ const Messenger = ({
   };
 
   const handleChatClick = (chatId) => {
-   /* console.log(chatId)
+    console.log(chatId)
     setChosenChat(chatId);
-    fetch(`${config.uri}/${user_id}/${chatId}/messages`)
+    fetch(`${config.uri}/messages?userPhone=${'1111111111'}&contactPhone=${chatId}`)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -105,7 +105,7 @@ const Messenger = ({
       .catch((error) => {
         // Handle any errors
         console.error(error);
-      });*/
+      });
   };
 
   const handleScroll = () => {
@@ -165,7 +165,7 @@ const Messenger = ({
                 <li
                   key={chat.id}
                   className="chat-item"
-                  onClick={() => handleChatClick(chat.id)}
+                  onClick={() => handleChatClick('6666666666')}
                 >
                   <img
                     src="https://via.placeholder.com/50"

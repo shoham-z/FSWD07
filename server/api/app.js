@@ -10,6 +10,7 @@ const logger = require('morgan');
 // const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const pfpRouter = require('./routes/pfp');
+const messagesRouter = require('./routes/messages');
 const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 app.use('/api/contacts', contactsRouter);
+app.use('/api/messages', messagesRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/users', usersRouter);
@@ -46,5 +48,5 @@ app.use('/api/pfp', pfpRouter);
 //   });
 const contact = { phone : "6666666666"}
 // addMessage('1111111111',contact,"hi my name is yehuda",'08:15:00')
-getMessages('1111111111',contact.phone)
+// getMessages('1111111111',contact.phone)
 module.exports = app;

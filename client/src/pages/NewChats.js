@@ -15,7 +15,7 @@ const NewChats = ({
     const [filteredContactData, setFilteredContactData] = useState(contacts);
     const [showNewContact, setShowNewContact] = useState(false);
     let navigate = useNavigate();
-
+  
     const handleSearch = (event) => {
         const value = event.target.value;
 

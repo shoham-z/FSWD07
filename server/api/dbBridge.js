@@ -523,8 +523,8 @@ async function addMessage(userPhone, contact, content, time) {
 async function getMessages(phon1,phone2) {
     const sql = `SELECT *
     FROM messages
-    WHERE (phone1 = ${phon1} AND phone2 = ${phone2})
-       OR (phone1 = ${phone2} AND phone2 = ${phon1})
+    WHERE (phone1 = '${phon1}' AND phone2 = '${phone2}')
+       OR (phone1 = '${phone2}' AND phone2 = '${phon1}')
     ORDER BY time DESC
     LIMIT 10;`;
   
