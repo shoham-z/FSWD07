@@ -72,10 +72,6 @@ const Login = (_props) => {
                     <button type='button' onClick={() => {
                         navigate('/register/')}}>Register</button>
                 </div>
-                <div className="form-group">
-                    <button type='button' onClick={() => {
-                        navigate('/messenger/')}}>login 1</button>
-                </div>
             </form>
         </div>
     );

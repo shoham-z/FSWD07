@@ -424,7 +424,6 @@ function getAllChats(userPhone) {
 }
 
 function addUser(userData) {
-    let response;
     const insertUserQuery = `INSERT INTO users (phone,name,userName, password, email) VALUES (?, ?, ?, ?, ?)`;
     const values = [
         userData.phone,
@@ -433,22 +432,26 @@ function addUser(userData) {
         userData.password,
         userData.email,
     ];
-    con.connect(function (err) {
-        if (err) throw err;
-        // console.log("Connected!");
+
+    return new Promise((resolve, reject) => {
+        con.connect((err) => {
+            if (err) {
+                console.error(err);
+                reject(-1);
+                return;
+            }
+
+            con.query(insertUserQuery, values, (err, _result) => {
+                if (err) {
+                    console.error(err);
+                    reject(-1);
+                } else {
+                    console.log('User registered successfully');
+                    resolve(0);
+                }
+            });
+        });
     });
-    con.query(insertUserQuery, values, (err, _result) => {
-        if (err) {
-            console.error(err);
-            response = -1;
-            //res.status(500).json({ error: "Internal server error" });
-        } else {
-            console.log("User registered successfully");
-            response = 0;
-            //res.json({ message: "User registered successfully" });
-        }
-    });
-    return response;
 }
 
 async function getUsers() {
