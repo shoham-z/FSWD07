@@ -13,7 +13,7 @@ const pfpRouter = require('./routes/pfp');
 const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
-const {init_db} = require("./dbBridge");
+const {init_db, addMessage, getMessages} = require("./dbBridge");
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use('/api/register', registerRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/pfp', pfpRouter);
 
-//init_db()
+// init_db()
 // const userPhone = "1111111111";
 // getAllChats(userPhone)
 //   .then((result) => {
@@ -44,4 +44,7 @@ app.use('/api/pfp', pfpRouter);
 //   .catch((error) => {
 //     console.error(error);
 //   });
+const contact = { phone : "6666666666"}
+// addMessage('1111111111',contact,"hi my name is yehuda",'08:15:00')
+getMessages('1111111111',contact.phone)
 module.exports = app;
