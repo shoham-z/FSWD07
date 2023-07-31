@@ -508,9 +508,10 @@ async function addContact(userphone, contact) {
     }
 }
 
-async function addMessage(userPhone, contact, content, time) {
+async function addMessage(userPhone, contact, content) {
+    console.log(userPhone,contact,content.content,content.time)
     const query = "INSERT INTO messages (phone1, phone2, content,time) VALUES (?, ?, ?, ?)";
-    const values = [userPhone, contact.phone, content, time];
+    const values = [userPhone, contact, content.content, content.time];
     try {
         await con.execute(query, values);
 

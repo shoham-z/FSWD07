@@ -30,20 +30,22 @@ const Messenger = ({
   const [phone, setPhone] = useState(0);
 
   const [messageInput, setMessageInput] = useState("");
+  const [sentTime, setSentTime] = useState("");
 
   const handleChangeMessage = (event) => {
     setMessageInput(event.target.value);
   };
 
   const handleSendMessage = () => {
+    let theMessage;
     if (messageInput.trim() !== "") {
-      // Send the message to the right section (assuming chatId is defined)
-      // For simplicity, we'll just create a dummy message object
-      const newMessage = {
-        id: messages.length + 1, // You may want to generate a unique ID
-        name: username, // Replace with the sender's name
-        text: messageInput,
+      
+      const newMessage = { 
+        id: chosenChat,
+        content: messageInput,
+        time: sentTime,
       };
+      theMessage = newMessage
 
       // Add the new message to the beginning of the messages list
       setMessages((prevMessages) => [newMessage, ...prevMessages]);
@@ -51,6 +53,31 @@ const Messenger = ({
       // Clear the message input after sending the message
       setMessageInput("");
     }
+
+    fetch(`${config.uri}/contacts?userPhone=${phone}&contactPhone=${chosenChat}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({theMessage})
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data
+            if (data.message !== "1") {
+                alert("Failed to save the message")
+                return;
+            }
+
+            alert(data.message)
+
+        })
+        .catch(error => {
+            // Handle any errors
+            alert("Could not save the message")
+            console.error(error);
+        });
   };
 
   useEffect(()=>{
@@ -66,6 +93,12 @@ const Messenger = ({
           console.error(error);
         });
   }, [username])
+
+  useEffect(() => {
+    // Update the sentTime state variable with the current timestamp
+    const timestamp = new Date().toLocaleString();
+    setSentTime(timestamp);
+  }, [handleSendMessage]);
 
   useEffect(() => {
 
@@ -196,6 +229,7 @@ const Messenger = ({
             <div key={message.id} className="message">
               <div className="Sender">{message.name}</div>
               <div className="messageContent">{message.content}</div>
+              <div className="messageTime">{message.time}</div>
             </div>
           ))}
         </div>

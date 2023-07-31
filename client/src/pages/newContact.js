@@ -27,7 +27,7 @@ const NewContact = (prop) => {
           .then(response => response.json())
           .then(data => {
               // Handle the response data
-              if (data.message !== "New contact successful") {
+              if (data.message !== "1") {
                   alert("Failed to save the contact")
                   return;
               }

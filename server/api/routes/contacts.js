@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
     console.log(req.query.userPhone, req.body)
     addContact(req.query.userPhone, req.body)
         .then(response => {
-            if (response === 0) res.status(200).json({message: 'New contact successful'});
+            if (response === 0) res.status(200).json({message: '1'});
         })
         .catch(err => console.log(err))
 })

@@ -12,9 +12,9 @@ router.get('/',function(req,res,next){
 
 router.post('/', (req, res) => {
     console.log(req.query.userPhone, req.body)
-    addMessage(req.query.userPhone, req.body.chatId,)
+    addMessage(req.query.userPhone, req.query.contactPhone,req.body)
         .then(response => {
-            if (response === 0) res.status(200).json({message: 'New contact successful'});
+            if (response === 0) res.status(200).json({message: '1'});
         })
         .catch(err => console.log(err))
 })
