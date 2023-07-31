@@ -96,7 +96,7 @@ const Messenger = ({
   const handleChatClick = (chatId) => {
     console.log(chatId)
     setChosenChat(chatId);
-    fetch(`${config.uri}/messages?userPhone=${phone}&contactPhone=${chatId}`)
+    fetch(`${config.uri}/messages?userPhone=${1111111111}&contactPhone=${chatId}`)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -193,7 +193,7 @@ const Messenger = ({
           {messages.map((message) => (
             <div key={message.id} className="message">
               <div className="Sender">{message.name}</div>
-              <div className="messageContent">{message.text}</div>
+              <div className="messageContent">{message.content}</div>
             </div>
           ))}
         </div>
