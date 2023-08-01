@@ -48,22 +48,35 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
-          <Route element={<Layout newContact = {newContact}
-                                  setNewContact = {setNewContact}
-                                  setNewChat = {setNewChat}
-                                  newChat = {newChat}
-                                  setSettings = {setSettings}
-                                  settings = {settings}
-                                  setNewGroup = {setNewGroup}
-                                  newGroup = {newGroup} />}>
-            <Route path="/messenger" element={<Messenger setNewContact = {setNewContact}
-                                                         setChosenChat={setChosenChat}
-                                                         chosenChat = {chosenChat}
-                                                         newChat = {newChat}
-                                                         newGroup = {newGroup}
-                                                         setNewGroup = {setNewGroup}
-                                                         settings = {settings}
-                                                         setNewChat = {setNewChat}/>}/>
+          <Route
+            element={
+              <Layout
+                newContact={newContact}
+                setNewContact={setNewContact}
+                setNewChat={setNewChat}
+                newChat={newChat}
+                setSettings={setSettings}
+                settings={settings}
+                setNewGroup={setNewGroup}
+                newGroup={newGroup}
+              />
+            }
+          >
+            <Route
+              path="/messenger"
+              element={
+                <Messenger
+                  setNewContact={setNewContact}
+                  setChosenChat={setChosenChat}
+                  chosenChat={chosenChat}
+                  newChat={newChat}
+                  newGroup={newGroup}
+                  setNewGroup={setNewGroup}
+                  settings={settings}
+                  setNewChat={setNewChat}
+                />
+              }
+            />
           </Route>
           <Route path="*" element={<NoPage />} />
         </Routes>

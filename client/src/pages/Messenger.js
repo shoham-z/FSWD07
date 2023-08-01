@@ -189,7 +189,8 @@ const Messenger = ({
     } else if (newGroup) {
       return <NewGroup contacts={contacts} />;
     } else {
-      return <Settings />;
+      console.log(phone)
+      return <Settings userPhone={phone}/>;
     }
   };
 

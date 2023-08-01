@@ -466,6 +466,76 @@ async function getUsers() {
   }
 }
 
+async function changPassword(userPhone, newPassword) {
+  const sql = `UPDATE users
+    SET password = '${newPassword}'
+    WHERE phone = '${userPhone}';`;
+
+  try {
+    const queryPromise = util.promisify(con.query).bind(con);
+    const t = await queryPromise(sql);
+    console.log(t);
+    return t;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+}
+
+async function deleteFromContacts(userPhone) {
+  const sql = `DELETE FROM contacts
+    WHERE phone1 = '${userPhone}' OR phone2 = '${userPhone}';`;
+
+  try {
+    const queryPromise = util.promisify(con.query).bind(con);
+    const t = await queryPromise(sql);
+    console.log(t);
+    return t;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+}
+
+  async function deleteFromMessages(userPhone) {
+    const sql = `DELETE FROM messages
+    WHERE phone1 = '${userPhone}' OR phone2 = '${userPhone}';`;
+
+    try {
+      const queryPromise = util.promisify(con.query).bind(con);
+      const t = await queryPromise(sql);
+      console.log(t);
+      return t;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
+  async function deleteUser(userPhone) {
+    const sql = `DELETE FROM users
+      WHERE phone = '${userPhone}';`;
+
+    try {
+      const queryPromise = util.promisify(con.query).bind(con);
+      const t = await queryPromise(sql);
+      console.log(t);
+      return t;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
+
+
+async function deleteUser(userPhone) {
+  const sql = `DELETE FROM users
+    WHERE phone = '${userPhone}';`;
+
+  try {
+    const queryPromise = util.promisify(con.query).bind(con);
+    const t = await queryPromise(sql);
+    console.log(t);
+    return t;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+}
 async function getUser(username) {
   const sql = `SELECT * FROM users WHERE userName='${username}'`;
 
@@ -562,18 +632,18 @@ async function getUserPhone(username) {
 }
 
 async function getChats(phone) {
-//   const sql = `SELECT DISTINCT
-//     LEAST(m.phone1, m.phone2) AS phone1,
-//     GREATEST(m.phone1, m.phone2) AS phone2,
-//     COALESCE(c.name, '') AS contact_name
-// FROM
-//     messages m
-// LEFT JOIN
-//     contacts c ON (m.phone1 = c.user_phone AND m.receiver = c.saved_contact_phone)
-//         OR (m.sender = c.saved_contact_phone AND m.receiver = c.user_phone)
-// WHERE
-//     m.sender = 'user_phone' OR
-//     m.receiver = 'user_phone';`;
+  //   const sql = `SELECT DISTINCT
+  //     LEAST(m.phone1, m.phone2) AS phone1,
+  //     GREATEST(m.phone1, m.phone2) AS phone2,
+  //     COALESCE(c.name, '') AS contact_name
+  // FROM
+  //     messages m
+  // LEFT JOIN
+  //     contacts c ON (m.phone1 = c.user_phone AND m.receiver = c.saved_contact_phone)
+  //         OR (m.sender = c.saved_contact_phone AND m.receiver = c.user_phone)
+  // WHERE
+  //     m.sender = 'user_phone' OR
+  //     m.receiver = 'user_phone';`;
 
   `SELECT DISTINCT
       LEAST(m.phone1, m.phone2) AS phone1,
@@ -619,4 +689,8 @@ module.exports = {
   addMessage,
   getMessages,
   getChats,
+  changPassword,
+  deleteFromContacts,
+  deleteFromMessages,
+  deleteUser
 };

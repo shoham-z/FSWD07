@@ -1,16 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {getUsers, getUserPhone} = require("../dbBridge");
-const {responseGet} = require("../headers");
+const {
+  getUsers,
+  getUserPhone,
+  changPassword,
+  deleteFromContacts,
+  deleteFromMessages,
+  deleteUser,
+} = require("../dbBridge");
+const { responseGet } = require("../headers");
 
 /* GET users section. */
-router.get('/', function (req, res, _next) {
-    getUsers().then(data => responseGet(res, data))
+router.get("/", function (req, res, _next) {
+  getUsers().then((data) => responseGet(res, data));
 });
 
-router.get('/phone', function (req, res, _next) {
-    console.log(req.query.username)
-    getUserPhone(req.query.username).then(data => responseGet(res, data))
+router.get("/phone", function (req, res, _next) {
+  console.log(req.query.username);
+  getUserPhone(req.query.username).then((data) => responseGet(res, data));
 });
 
 // router.get('/:username', function (req, res, next) {
@@ -25,12 +32,32 @@ router.get('/phone', function (req, res, _next) {
 //     res.status(200).json({message: 'User data received and processed successfully'});
 // })
 //
+console.log("hhhhh");
+router.post("/changePassword", (req, res) => {
+  console.log(req.body.userPhone, req.body.newPassword);
+  changPassword(req.body.userPhone, req.body.newPassword)
+    .then((response) => {
+      if (response === 0) res.status(200).json({ message: "changed successfully" });
+    })
+    .catch((err) => console.log(err));
+});
+
+router.delete("/delete-user", (req, res) => {
+  console.log(req.body.userPhone);
+  deleteFromContacts(req.body.userPhone);
+  deleteFromMessages(req.body.userPhone);
+  deleteUser(req.body.userPhone)
+    .then((response) => {
+      if (response === 0) res.status(200).json({ message: "1" });
+    })
+    .catch((err) => console.log(err));
+});
 // router.post('/change-password', (req, res) => {
 //     console.log('coming to change password')
-//
+
 //     let success = false;
-//
-//     getCollectionByUsername('loginCredentials', req.body.username)
+
+//          changePassword(req.body.userPhone,req.body.newPassword)
 //         .then(data => {
 //             if (data[0].password === req.body.oldPassword) {
 //                 updateUsername(req.body.username, req.body.newPassword)
@@ -40,8 +67,7 @@ router.get('/phone', function (req, res, _next) {
 //                 res.status(200).json({message: 'Passwords not matching'});
 //             }
 //         });
-//
-//
+
 //     if (success) {res.status(200).json({message: 'Password Changed'}); console.log("Password Changed")}
 // })
 //

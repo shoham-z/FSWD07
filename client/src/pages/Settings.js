@@ -7,10 +7,11 @@ import exp from "../App";
 import '../styles/form.css'
 
 
-const Settings = () => {
+const Settings = ({userPhone}) => {
+    console.log(userPhone)
     const routeParams = useParams();
     const {currentUsername} = useContext(exp.CurrentUserContext);
-    let username = currentUsername || routeParams.username || '';
+    let username = JSON.parse(localStorage.getItem('userName'));
     let navigate =  useNavigate();
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
@@ -48,13 +49,13 @@ const Settings = () => {
         }
 
         let fetchData = async () => {
-            return await fetch(`${config.uri}/users/change-password`, {
+            return await fetch(`${config.uri}/users/changePassword`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
-                    body: JSON.stringify({username, oldPassword, newPassword})
+                    body: JSON.stringify({userPhone,newPassword})
                 });
 
         }
@@ -76,7 +77,7 @@ const Settings = () => {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                body: JSON.stringify({username})
+                body: JSON.stringify({userPhone})
             });
 
         }
