@@ -29,9 +29,13 @@ nav {
 .left-side-bar{
     width: 50%;
     display: flex;
+    color: #0a0a0a;
+    justify-content: space-around;
 }
 
   .profile-icon{
+    display: flex;
+    align-self: center;
     color: #0e0e0e;
   }
 

@@ -9,7 +9,7 @@ import {FaSearch, FaPaperPlane} from "react-icons/fa";
 import config from "../config.json";
 
 const Messenger = ({
-                       setNewContact, setChosenChat, chosenChat, newChat, newGroup, setNewGroup, settings, setNewChat,
+                       setNewContact, setChosenChat, chosenChat, newChat, newGroup, setNewGroup, settings, setNewChat, setChatsName,
                    }) => {
     // const user_id = JSON.parse(localStorage.getItem("user")).id;
     const [chatData, setChatData] = useState(JSON.parse(localStorage.getItem("Chats")) || []);
@@ -19,8 +19,6 @@ const Messenger = ({
     const username = localStorage.getItem("username");
     const [phone, setPhone] = useState(0);
     const [contacts, setContacts] = useState([]);
-    const [contactsFlag, setContactsFlag] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
 
     const [messageInput, setMessageInput] = useState("");
 
@@ -104,7 +102,7 @@ const Messenger = ({
                 });
 
             // Add the new message to the beginning of the messages list
-            setMessages((prevMessages) => [newMessage, ...prevMessages]);
+            setMessages((prevMessages) => [...prevMessages,newMessage ]);
 
             // Clear the message input after sending the message
             setMessageInput("");
@@ -125,7 +123,8 @@ const Messenger = ({
         setFilteredChatData(filteredChats);
     };
 
-    const handleChatClick = (chatId) => {
+    const handleChatClick = (chatId,name) => {
+        setChatsName(name);
         console.log(chatId);
         setChosenChat(chatId);
         fetch(`${config.uri}/messages?userPhone=${phone}&contactPhone=${chatId}`)
@@ -194,7 +193,7 @@ const Messenger = ({
                             {filteredChatData.map((chat) => (<li
                                     key={chat.phone}
                                     className="chat-item"
-                                    onClick={() => handleChatClick(chat.phone)}
+                                    onClick={() => handleChatClick(chat.phone,typeof chat.name === 'object' ? chat.name[0].name : chat.name)}
                                 >
                                     <img
                                         src="https://via.placeholder.com/50"
@@ -202,7 +201,7 @@ const Messenger = ({
                                         className="chat-avatar"
                                     />
                                     <div className="chat-info">
-                                        <h3 className="chat-title">{chat.name}</h3>
+                                    <h3 className="chat-title">{typeof chat.name === 'object' ? chat.name[0].name : chat.name}</h3>
                                     </div>
                                 </li>))}
                         </ul>

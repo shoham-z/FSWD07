@@ -6,6 +6,7 @@ const {getUserContacts, addContact, getContacts} = require("../dbBridge");
 /* GET contacts section. */
 router.get('/', function (req, res, _next) {
     const p = req.query.userPhone ? getUserContacts(req.query.userPhone) : getContacts()
+    console.log(p)
     p.then(data => responseGet(res, data))
 });
 

@@ -18,6 +18,7 @@ function App() {
   const [newGroup, setNewGroup] = useState(false);
   const [settings, setSettings] = useState(false);
   const [newContact, setNewContact] = useState(false);
+  const [chatsName, setChatsName] = useState('');
 
   return (
     <CurrentUserContext.Provider
@@ -57,6 +58,7 @@ function App() {
                 settings={settings}
                 setNewGroup={setNewGroup}
                 newGroup={newGroup}
+                chatsName = {chatsName}
               />
             }
           >
@@ -72,6 +74,7 @@ function App() {
                   setNewGroup={setNewGroup}
                   settings={settings}
                   setNewChat={setNewChat}
+                  setChatsName={setChatsName}
                 />
               }
             />

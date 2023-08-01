@@ -181,8 +181,9 @@
 
   /* Align messages sent by the current user to the left */
 .message-received  {
+  /* display: flex; */
   background-color: #d3e8d3;
-  align-self: flex-start;
+  align-self: flex-end;
   margin-left: 60vh;
 }
 

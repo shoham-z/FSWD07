@@ -18,7 +18,8 @@ const Layout = ({
   setNewGroup,
   newGroup,
   setNewContact,
-  newContact
+  newContact,
+  chatsName
 }) => {
   let navigate = useNavigate();
   const routeParams = useParams();
@@ -104,6 +105,7 @@ const Layout = ({
                 ) : (
                   <FaUser className="profile-icon" />
                 )}
+                <h4>{localStorage.getItem('username')}</h4>
               </div>
               <div className="right-side-bar">
                 <Link className="link" onClick={() => setNewChat(true)}>
@@ -149,6 +151,7 @@ const Layout = ({
                 <FaUser className="profile-icon" />
                 </>
               )}
+              <h4>{chatsName}</h4>
             </div>
             <div className="right-side-bar">
               <Link className="link" >

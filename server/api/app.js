@@ -23,7 +23,8 @@ const {
     changPassword,
     deleteUser,
     deleteFromContacts,
-    deleteFromMessages
+    deleteFromMessages,
+    getUserContacts
 } = require("./dbBridge");
 
 const app = express();
@@ -60,11 +61,12 @@ app.use('/api/chats', chatRouter);
 //const contact = { phone : "6666666666"}
 //addMessage('1111111111',contact.phone,"hi my name is yehuda",'2023-07-19 18:30:00')
 // getMessages('4442225555','0546457095')
-// getUser('yehuda')
+// getUser('shoham')
 // changPassword('0546457095','22')
 // getContacts()
 // getChats('4442225555')
 // deleteFromContacts('0546457095')
 // deleteFromMessages('0546457095')
 // deleteUser('0546457095')
+// getUserContacts('0587654321')
 module.exports = app;
