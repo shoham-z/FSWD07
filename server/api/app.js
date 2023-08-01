@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 
-
 // const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const pfpRouter = require('./routes/pfp');
@@ -15,7 +14,17 @@ const contactsRouter = require('./routes/contacts');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const chatRouter = require('./routes/chat');
-const {init_db, addMessage, getMessages, getChats, getUser, changPassword, deleteUser, deleteFromContacts, deleteFromMessages} = require("./dbBridge");
+const {
+    init_db,
+    addMessage,
+    getMessages,
+    getChats,
+    getUser,
+    changPassword,
+    deleteUser,
+    deleteFromContacts,
+    deleteFromMessages
+} = require("./dbBridge");
 
 const app = express();
 
@@ -25,7 +34,7 @@ app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -4,8 +4,6 @@ import Layout from "./pages/Layout";
 import Login from "./pages/Login";
 import NoPage from "./pages/NoPage";
 import Messenger from "./pages/Messenger";
-import NewChats from "./pages/NewChats";
-import ImageUploader from "./pages/ImageUploader";
 
 import { createContext, useState } from "react";
 import Register from "./pages/Register";

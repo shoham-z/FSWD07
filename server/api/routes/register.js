@@ -7,9 +7,7 @@ router.post('/', async function (req, res, _next) {
 
     let response = await getUser(req.body.username);
 
-    console.log("got user: " + response)
-
-    if (response.length===0) {
+    if (response.length === 0) {
         // Successful register
 
         addUser(req.body)

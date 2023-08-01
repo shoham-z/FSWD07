@@ -1,18 +1,15 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useContext, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 import '../styles/dashboard.css';
 import React from "react";
 import config from '../config';
-import exp from "../App";
 import '../styles/form.css'
 
 
 const Settings = ({userPhone}) => {
     console.log(userPhone)
-    const routeParams = useParams();
-    const {currentUsername} = useContext(exp.CurrentUserContext);
     let username = JSON.parse(localStorage.getItem('userName'));
-    let navigate =  useNavigate();
+    let navigate = useNavigate();
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
     const [passwordChanged, setPasswordChanged] = useState(false)
@@ -49,22 +46,19 @@ const Settings = ({userPhone}) => {
         }
 
         let fetchData = async () => {
-            return await fetch(`${config.uri}/users/changePassword`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({userPhone,newPassword})
-                });
+            return await fetch(`${config.uri}/users/change-password`, {
+                method: 'POST', headers: {
+                    'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+                }, body: JSON.stringify({userPhone, newPassword})
+            });
 
         }
         fetchData()
-            .then(r=> console.log(r))
+            .then(r => console.log(r))
 
         setChangePassword(false)
         setPasswordChanged(true)
-        }
+    }
 
     const deleteUserConfirm = () => {
         setConfirmDelete(true)
@@ -72,22 +66,18 @@ const Settings = ({userPhone}) => {
     const submitDeleteUser = () => {
         let fetchData = async () => {
             return await fetch(`${config.uri}/users/delete-user`, {
-                method: 'delete',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({userPhone})
+                method: 'delete', headers: {
+                    'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'
+                }, body: JSON.stringify({userPhone})
             });
 
         }
         fetchData()
-            .then(r=> console.log(r))
+            .then(r => console.log(r))
         localStorage.removeItem("username");
         navigate(`/`)
     };
-    return (
-        <div className="left-section1">
+    return (<div className="left-section1">
             <h1>Hello, {username}</h1>
             <h2>Settings</h2>
 
@@ -106,13 +96,13 @@ const Settings = ({userPhone}) => {
                     <div className="form-group">
                         <label htmlFor="newPassword">New Password:</label>
                         <input type="password" name="newPassword"
-                                 placeholder={"Enter your new password"}
+                               placeholder={"Enter your new password"}
                                value={newPassword} onChange={inputChanged}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="newPasswordRepeat">New Password Again:</label>
                         <input type="password" name="newPasswordRepeat"
-                                 placeholder={"Enter your new password again"}
+                               placeholder={"Enter your new password again"}
                                value={newPasswordRepeat} onChange={inputChanged}/>
                     </div>
                     <div className="form-group">
@@ -132,12 +122,11 @@ const Settings = ({userPhone}) => {
                         <button type="submit">Confirm</button>
                     </div>
                     <div className="form-group">
-                        <button type="button" onClick={()=>setConfirmDelete(false)}>Cancel</button>
+                        <button type="button" onClick={() => setConfirmDelete(false)}>Cancel</button>
                     </div>
                 </form>
             </div>}
-        </div>
-    )
+        </div>)
 };
 
 
